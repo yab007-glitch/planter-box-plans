@@ -1,0 +1,841 @@
+╔══════════════════════════════════════════════════════════════════════════════╗
+║          WOODWORKING PROJECTS — CANADIAN PRICING GUIDE                     ║
+║          Folder: $50-$100 Profit Per Project / Easy                   ║
+║          Generated for: Valleyfield, QC (April 2026)                       ║
+╚══════════════════════════════════════════════════════════════════════════════╝
+
+HOW TO USE THIS GUIDE
+─────────────────────
+• Material costs are based on Canac / Home Depot prices in the Valleyfield, QC
+  area (April 2026, CAD including Quebec taxes ~14.975%).
+• Selling prices are benchmarked against active listings on:
+  - Facebook Marketplace (Quebec region)
+  - Kijiji Canada
+  - Etsy Canada (handmade/custom category)
+  - Amazon Canada (where applicable)
+• Profit ranges assume you build the project yourself with basic hand & power
+  tools. Labour is YOUR profit — not deducted from estimates.
+• Prices are ranges. Finished quality, wood species, and custom options
+  significantly affect final sale price.
+• Verify lumber prices at canac.ca or your local Canac/Reno-Depot before
+  purchasing — seasonal spikes (especially cedar in spring) are common.
+
+──────────────────────────────────────────────────────────────────────────────
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+LUMBER PRICE REFERENCE — CANAC / HOME DEPOT (Valleyfield QC area)
+Prices as of April 2026 (CAD incl. QC taxes ~14.975%)
+Source: canac.ca, homedepot.ca, bidm8.com/2x4-lumber-costs-canada
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  SPF Spruce (Kiln-Dried, Framing):
+    2x2x8 ft      ≈  $5.00 / pc
+    2x4x8 ft      ≈  $7.75 / pc
+    2x4x10 ft     ≈ $10.00 / pc
+    2x4x12 ft     ≈ $12.50 / pc
+    2x6x8 ft      ≈ $12.50 / pc
+    2x6x10 ft     ≈ $16.50 / pc
+    2x8x8 ft      ≈ $16.00 / pc
+    1x4x8 ft      ≈  $8.00 / pc
+    1x6x8 ft      ≈ $11.00 / pc
+
+  Cedar (Solid, deck/fence grade):
+    1x4x8 ft      ≈ $10.50 / pc
+    1x6x8 ft      ≈ $14.00 / pc
+    2x4x8 ft      ≈ $13.50 / pc
+    2x6x8 ft      ≈ $20.00 / pc
+    Cedar (bulk lineal ft) ≈ $1.20–$2.50 / lf
+
+  Pressure-Treated (ACQ, above-ground):
+    2x4x8 ft      ≈ $11.50 / pc
+    2x6x8 ft      ≈ $17.00 / pc
+    2x4x10 ft     ≈ $14.50 / pc
+    1x6x8 ft      ≈ $13.00 / pc
+
+  Sheet Goods:
+    1/2" SPF Plywood 4x8  ≈ $50.00 / sheet
+    3/4" SPF Plywood 4x8  ≈ $68.00 / sheet
+    3/4" MDF 4x8          ≈ $55.00 / sheet
+    1/2" MDF 4x8          ≈ $42.00 / sheet
+    1/4" Plywood 4x8      ≈ $32.00 / sheet
+
+  Hardware & Consumables (per project, avg):
+    Kreg pocket screws + glue    ≈ $10–$20
+    Outdoor screws / bolts       ≈ $10–$25
+    Sandpaper + sanding block    ≈  $5–$10
+    Stain / paint / sealer       ≈ $20–$45
+    Misc (brackets, hinges, etc) ≈ $10–$30
+
+  Note: Always verify current prices at your local Canac store
+  (canac.ca) or Reno-Depot before purchasing. Prices fluctuate
+  seasonally — cedar and treated lumber spike in spring/summer.
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+================================================================================
+  PROJECTS IN THIS FOLDER ($50-$100 Profit Per Project / Easy)
+================================================================================
+
+┌──────────────────────────────────────────────────────────────────────────────
+│ FILE:     AgMech_PlantBox_Project_AgedWeb.pdf
+│ PROJECT:  Simple Agricultural Planter Box
+├──────────────────────────────────────────────────────────────────────────────
+│ MATERIAL COST (CAD):  $20–$35
+│ SELLING PRICE (CAD):  $55–$85
+│ ESTIMATED PROFIT:     $35–$65
+│ BEST PLATFORMS:       Facebook Marketplace QC, Kijiji, local markets
+│ SALES NOTE:           Basic design, good for beginners. Sell at roadside in spring.
+│ PRICE REFERENCE:      https://www.kijiji.ca/b-canada/wood-planter-boxes/k0l0
+└──────────────────────────────────────────────────────────────────────────────
+
+┌──────────────────────────────────────────────────────────────────────────────
+│ FILE:     AgedWeb_SAE_PlanterBox.pdf
+│ PROJECT:  SAE Planter Box (Educational Plan)
+├──────────────────────────────────────────────────────────────────────────────
+│ MATERIAL COST (CAD):  $20–$32
+│ SELLING PRICE (CAD):  $55–$80
+│ ESTIMATED PROFIT:     $35–$60
+│ BEST PLATFORMS:       Facebook Marketplace QC, Kijiji, local nurseries
+│ SALES NOTE:           Simple build; good production item to make in batches of 5–10.
+│ PRICE REFERENCE:      https://www.kijiji.ca/b-canada/wood-planter-boxes/k0l0
+└──────────────────────────────────────────────────────────────────────────────
+
+┌──────────────────────────────────────────────────────────────────────────────
+│ FILE:     ArchiveOrg_WW_Sawhorse.pdf
+│ PROJECT:  DIY Workshop Sawhorse
+├──────────────────────────────────────────────────────────────────────────────
+│ MATERIAL COST (CAD):  $30–$45
+│ SELLING PRICE (CAD):  $80–$120
+│ ESTIMATED PROFIT:     $50–$90
+│ BEST PLATFORMS:       Facebook Marketplace QC, Kijiji, local job sites
+│ SALES NOTE:           Fast-moving on FB Marketplace among local contractors & hobbyists. Sell as a matching pair ($140–$200/pair) for higher volume.
+│ PRICE REFERENCE:      https://www.kijiji.ca/b-buy-sell/canada/sawhorse/k0c10l0
+└──────────────────────────────────────────────────────────────────────────────
+
+┌──────────────────────────────────────────────────────────────────────────────
+│ FILE:     ArchiveOrg_WW_step-stool-plan.pdf
+│ PROJECT:  Wooden Step Stool
+├──────────────────────────────────────────────────────────────────────────────
+│ MATERIAL COST (CAD):  $20–$35
+│ SELLING PRICE (CAD):  $65–$110
+│ ESTIMATED PROFIT:     $45–$80
+│ BEST PLATFORMS:       Facebook Marketplace QC, Kijiji, Etsy Canada
+│ SALES NOTE:           Painted step stools sell very fast on Etsy Canada ($80–$130). Add personalization for $20–$30 premium.
+│ PRICE REFERENCE:      https://www.etsy.com/ca/market/wooden_step_stool
+└──────────────────────────────────────────────────────────────────────────────
+
+┌──────────────────────────────────────────────────────────────────────────────
+│ FILE:     ArchiveOrg_WW_sunflower-clock-plan.pdf
+│ PROJECT:  Sunflower Wall Clock (Decorative)
+├──────────────────────────────────────────────────────────────────────────────
+│ MATERIAL COST (CAD):  $15–$25
+│ SELLING PRICE (CAD):  $55–$90
+│ ESTIMATED PROFIT:     $40–$70
+│ BEST PLATFORMS:       Etsy Canada, Facebook Marketplace QC
+│ SALES NOTE:           Decorative wall art sells well on Etsy Canada. Seasonal demand peaks in spring/summer.
+│ PRICE REFERENCE:      https://www.etsy.com/ca/market/wood_clock
+└──────────────────────────────────────────────────────────────────────────────
+
+┌──────────────────────────────────────────────────────────────────────────────
+│ FILE:     ArchiveOrg_basic_box_make.pdf
+│ PROJECT:  Basic Wooden Box (Multi-use)
+├──────────────────────────────────────────────────────────────────────────────
+│ MATERIAL COST (CAD):  $15–$30
+│ SELLING PRICE (CAD):  $50–$85
+│ ESTIMATED PROFIT:     $35–$65
+│ BEST PLATFORMS:       Etsy Canada, local craft fairs, Facebook Marketplace
+│ SALES NOTE:           Versatile seller — market as storage box, keepsake box, or gift box. Personalization adds $15–$25.
+│ PRICE REFERENCE:      https://www.etsy.com/ca/market/wooden_box
+└──────────────────────────────────────────────────────────────────────────────
+
+┌──────────────────────────────────────────────────────────────────────────────
+│ FILE:     BobsPlans_Wood_Deck_Planter_Box.pdf
+│ PROJECT:  Deck Planter Box (Bob's Plans)
+├──────────────────────────────────────────────────────────────────────────────
+│ MATERIAL COST (CAD):  $25–$40
+│ SELLING PRICE (CAD):  $65–$100
+│ ESTIMATED PROFIT:     $40–$75
+│ BEST PLATFORMS:       Facebook Marketplace QC, Kijiji
+│ SALES NOTE:           Classic deck planter. Sell cedar version for $90–$120 in spring.
+│ PRICE REFERENCE:      https://www.kijiji.ca/b-canada/wood-planter-boxes/k0l0
+└──────────────────────────────────────────────────────────────────────────────
+
+┌──────────────────────────────────────────────────────────────────────────────
+│ FILE:     Cedar_Planter_Box_Plans_WoodworkCity.pdf
+│ PROJECT:  Cedar Planter Box (WoodworkCity)
+├──────────────────────────────────────────────────────────────────────────────
+│ MATERIAL COST (CAD):  $30–$50
+│ SELLING PRICE (CAD):  $75–$120
+│ ESTIMATED PROFIT:     $45–$90
+│ BEST PLATFORMS:       Facebook Marketplace QC, Etsy Canada, Kijiji
+│ SALES NOTE:           Cedar planters listed on Kijiji at $60–$120 sold within days in spring. High demand.
+│ PRICE REFERENCE:      https://www.kijiji.ca/b-canada/wood-planter-boxes/k0l0
+└──────────────────────────────────────────────────────────────────────────────
+
+┌──────────────────────────────────────────────────────────────────────────────
+│ FILE:     Easy_DIY_Planter_Box_Plans_AnneOfAllTrades.pdf
+│ PROJECT:  Easy DIY Planter Box (Anne of All Trades)
+├──────────────────────────────────────────────────────────────────────────────
+│ MATERIAL COST (CAD):  $25–$40
+│ SELLING PRICE (CAD):  $65–$100
+│ ESTIMATED PROFIT:     $40–$75
+│ BEST PLATFORMS:       Facebook Marketplace QC, Kijiji, local markets
+│ SALES NOTE:           Classic planter design, easy build. Sell at farmers markets or roadside in season.
+│ PRICE REFERENCE:      https://www.kijiji.ca/b-canada/wood-planter-boxes/k0l0
+└──────────────────────────────────────────────────────────────────────────────
+
+┌──────────────────────────────────────────────────────────────────────────────
+│ FILE:     Free-1x6-Raised-Garden-Bed-Plans-GBED15.pdf
+│ PROJECT:  1x6 ft Raised Garden Bed
+├──────────────────────────────────────────────────────────────────────────────
+│ MATERIAL COST (CAD):  $25–$40
+│ SELLING PRICE (CAD):  $65–$95
+│ ESTIMATED PROFIT:     $40–$70
+│ BEST PLATFORMS:       Facebook Marketplace QC, Kijiji
+│ SALES NOTE:           Small compact bed for balconies or patios. Good urban market in Valleyfield/Montréal.
+│ PRICE REFERENCE:      https://www.facebook.com/marketplace/montreal/raised-garden-beds/
+└──────────────────────────────────────────────────────────────────────────────
+
+┌──────────────────────────────────────────────────────────────────────────────
+│ FILE:     Free-2x2-Raised-Planter-Plans-GBED21.pdf
+│ PROJECT:  2x2 ft Raised Planter Box
+├──────────────────────────────────────────────────────────────────────────────
+│ MATERIAL COST (CAD):  $28–$42
+│ SELLING PRICE (CAD):  $65–$95
+│ ESTIMATED PROFIT:     $37–$67
+│ BEST PLATFORMS:       Facebook Marketplace QC, Kijiji
+│ SALES NOTE:           Small square planters sell fast. Great beginner seller — quick build, good margin.
+│ PRICE REFERENCE:      https://www.kijiji.ca/b-canada/wood-planter-boxes/k0l0
+└──────────────────────────────────────────────────────────────────────────────
+
+┌──────────────────────────────────────────────────────────────────────────────
+│ FILE:     Free-2x3-Raised-Garden-Planter-Plans-GBED13.pdf
+│ PROJECT:  2x3 ft Raised Garden Planter
+├──────────────────────────────────────────────────────────────────────────────
+│ MATERIAL COST (CAD):  $28–$45
+│ SELLING PRICE (CAD):  $65–$100
+│ ESTIMATED PROFIT:     $40–$72
+│ BEST PLATFORMS:       Facebook Marketplace QC, Kijiji
+│ SALES NOTE:           Compact size suits apartment balconies. Great for cedar finish — charge $20 more.
+│ PRICE REFERENCE:      https://www.facebook.com/marketplace/montreal/raised-garden-beds/
+└──────────────────────────────────────────────────────────────────────────────
+
+┌──────────────────────────────────────────────────────────────────────────────
+│ FILE:     Free-2x3-Tiered-Planter-Plans-GBED20.pdf
+│ PROJECT:  2x3 ft Tiered Planter
+├──────────────────────────────────────────────────────────────────────────────
+│ MATERIAL COST (CAD):  $35–$55
+│ SELLING PRICE (CAD):  $85–$130
+│ ESTIMATED PROFIT:     $50–$95
+│ BEST PLATFORMS:       Facebook Marketplace QC, Kijiji, Etsy Canada
+│ SALES NOTE:           Tiered planters command a premium. Sell well in spring; list by early April in QC.
+│ PRICE REFERENCE:      https://www.kijiji.ca/b-canada/wood-planter-boxes/k0l0
+└──────────────────────────────────────────────────────────────────────────────
+
+┌──────────────────────────────────────────────────────────────────────────────
+│ FILE:     Free-3x1-Window-Planter-Box-Plans-GBED25.pdf
+│ PROJECT:  3x1 ft Window Planter Box
+├──────────────────────────────────────────────────────────────────────────────
+│ MATERIAL COST (CAD):  $22–$35
+│ SELLING PRICE (CAD):  $60–$90
+│ ESTIMATED PROFIT:     $38–$68
+│ BEST PLATFORMS:       Facebook Marketplace QC, Kijiji, local nurseries
+│ SALES NOTE:           Window planters sell fast in spring. Cedar version commands $20-$30 premium over pine.
+│ PRICE REFERENCE:      https://www.kijiji.ca/b-canada/wood-planter-boxes/k0l0
+└──────────────────────────────────────────────────────────────────────────────
+
+┌──────────────────────────────────────────────────────────────────────────────
+│ FILE:     Free-4x1-Window-Planter-Box-Plans-GBED24.pdf
+│ PROJECT:  4x1 ft Window Planter Box
+├──────────────────────────────────────────────────────────────────────────────
+│ MATERIAL COST (CAD):  $28–$40
+│ SELLING PRICE (CAD):  $70–$100
+│ ESTIMATED PROFIT:     $42–$72
+│ BEST PLATFORMS:       Facebook Marketplace QC, Kijiji, local nurseries
+│ SALES NOTE:           Popular in spring/summer. Sell sets of 2 at $130–$180 for faster turnover.
+│ PRICE REFERENCE:      https://www.kijiji.ca/b-canada/wood-planter-boxes/k0l0
+└──────────────────────────────────────────────────────────────────────────────
+
+┌──────────────────────────────────────────────────────────────────────────────
+│ FILE:     Horizontal_Planter_Box_Plans.pdf
+│ PROJECT:  Horizontal Planter Box
+├──────────────────────────────────────────────────────────────────────────────
+│ MATERIAL COST (CAD):  $25–$40
+│ SELLING PRICE (CAD):  $65–$100
+│ ESTIMATED PROFIT:     $40–$75
+│ BEST PLATFORMS:       Facebook Marketplace QC, Kijiji, Etsy Canada
+│ SALES NOTE:           Modern style sells well on Etsy. Stain in black or grey for contemporary market.
+│ PRICE REFERENCE:      https://www.etsy.com/ca/market/cedar_planter_box
+└──────────────────────────────────────────────────────────────────────────────
+
+┌──────────────────────────────────────────────────────────────────────────────
+│ FILE:     KregTool_2Tier_Hanging_Planter.pdf
+│ PROJECT:  2-Tier Hanging Planter
+├──────────────────────────────────────────────────────────────────────────────
+│ MATERIAL COST (CAD):  $22–$35
+│ SELLING PRICE (CAD):  $60–$95
+│ ESTIMATED PROFIT:     $38–$73
+│ BEST PLATFORMS:       Etsy Canada, Facebook Marketplace QC
+│ SALES NOTE:           Two-tier planters move fast on Etsy Canada. Spring peak demand.
+│ PRICE REFERENCE:      https://www.etsy.com/ca/market/hanging_planter
+└──────────────────────────────────────────────────────────────────────────────
+
+┌──────────────────────────────────────────────────────────────────────────────
+│ FILE:     KregTool_Angled_Cedar_Planter.pdf
+│ PROJECT:  Angled Cedar Planter Box
+├──────────────────────────────────────────────────────────────────────────────
+│ MATERIAL COST (CAD):  $28–$45
+│ SELLING PRICE (CAD):  $70–$110
+│ ESTIMATED PROFIT:     $42–$82
+│ BEST PLATFORMS:       Facebook Marketplace QC, Etsy Canada
+│ SALES NOTE:           Angled design is distinctive — stands out on marketplace. Cedar version premium.
+│ PRICE REFERENCE:      https://www.etsy.com/ca/market/cedar_planter_box
+└──────────────────────────────────────────────────────────────────────────────
+
+┌──────────────────────────────────────────────────────────────────────────────
+│ FILE:     KregTool_DIY_Hanging_Planter.pdf
+│ PROJECT:  DIY Hanging Planter
+├──────────────────────────────────────────────────────────────────────────────
+│ MATERIAL COST (CAD):  $18–$30
+│ SELLING PRICE (CAD):  $55–$85
+│ ESTIMATED PROFIT:     $37–$67
+│ BEST PLATFORMS:       Facebook Marketplace QC, Etsy Canada, local nurseries
+│ SALES NOTE:           Hanging planters move fast on Etsy. Sell pairs ($100–$150/pair) for better value.
+│ PRICE REFERENCE:      https://www.etsy.com/ca/market/hanging_planter
+└──────────────────────────────────────────────────────────────────────────────
+
+┌──────────────────────────────────────────────────────────────────────────────
+│ FILE:     KregTool_DIY_Wooden_Planter.pdf
+│ PROJECT:  DIY Wooden Planter Box (Kreg)
+├──────────────────────────────────────────────────────────────────────────────
+│ MATERIAL COST (CAD):  $28–$45
+│ SELLING PRICE (CAD):  $70–$110
+│ ESTIMATED PROFIT:     $42–$82
+│ BEST PLATFORMS:       Facebook Marketplace QC, Kijiji
+│ SALES NOTE:           Versatile planter. Use cedar for premium version at $100–$140.
+│ PRICE REFERENCE:      https://www.kijiji.ca/b-canada/wood-planter-boxes/k0l0
+└──────────────────────────────────────────────────────────────────────────────
+
+┌──────────────────────────────────────────────────────────────────────────────
+│ FILE:     KregTool_Deck_Railing_Planter_Box.pdf
+│ PROJECT:  Deck Railing Planter Box
+├──────────────────────────────────────────────────────────────────────────────
+│ MATERIAL COST (CAD):  $22–$35
+│ SELLING PRICE (CAD):  $60–$95
+│ ESTIMATED PROFIT:     $38–$73
+│ BEST PLATFORMS:       Facebook Marketplace QC, Kijiji, local nurseries
+│ SALES NOTE:           High demand item for deck season (May–Sept in QC). Sell per railing section.
+│ PRICE REFERENCE:      https://www.kijiji.ca/b-canada/wood-planter-boxes/k0l0
+└──────────────────────────────────────────────────────────────────────────────
+
+┌──────────────────────────────────────────────────────────────────────────────
+│ FILE:     KregTool_Garden_Planter_GingerWoodworks.pdf
+│ PROJECT:  Garden Planter (Ginger Woodworks style)
+├──────────────────────────────────────────────────────────────────────────────
+│ MATERIAL COST (CAD):  $28–$45
+│ SELLING PRICE (CAD):  $70–$110
+│ ESTIMATED PROFIT:     $42–$82
+│ BEST PLATFORMS:       Facebook Marketplace QC, Etsy Canada, Kijiji
+│ SALES NOTE:           Clean design. Sells at $80–$110 on Facebook Marketplace QC.
+│ PRICE REFERENCE:      https://www.kijiji.ca/b-canada/wood-planter-boxes/k0l0
+└──────────────────────────────────────────────────────────────────────────────
+
+┌──────────────────────────────────────────────────────────────────────────────
+│ FILE:     KregTool_Locket_Planter_Box.pdf
+│ PROJECT:  Locket-Style Planter Box
+├──────────────────────────────────────────────────────────────────────────────
+│ MATERIAL COST (CAD):  $22–$35
+│ SELLING PRICE (CAD):  $60–$90
+│ ESTIMATED PROFIT:     $38–$68
+│ BEST PLATFORMS:       Etsy Canada, Facebook Marketplace QC
+│ SALES NOTE:           Unique name/design creates curiosity online. Good Etsy candidate.
+│ PRICE REFERENCE:      https://www.etsy.com/ca/market/cedar_planter_box
+└──────────────────────────────────────────────────────────────────────────────
+
+┌──────────────────────────────────────────────────────────────────────────────
+│ FILE:     KregTool_Modern_Planter_Box.pdf
+│ PROJECT:  Modern Planter Box
+├──────────────────────────────────────────────────────────────────────────────
+│ MATERIAL COST (CAD):  $28–$45
+│ SELLING PRICE (CAD):  $70–$110
+│ ESTIMATED PROFIT:     $42–$82
+│ BEST PLATFORMS:       Etsy Canada, Facebook Marketplace QC
+│ SALES NOTE:           Modern/minimalist design appeals to urban buyers. Black paint finish sells premium.
+│ PRICE REFERENCE:      https://www.etsy.com/ca/market/modern_planter
+└──────────────────────────────────────────────────────────────────────────────
+
+┌──────────────────────────────────────────────────────────────────────────────
+│ FILE:     KregTool_Over_Railing_Planter_Box.pdf
+│ PROJECT:  Over-the-Railing Planter Box
+├──────────────────────────────────────────────────────────────────────────────
+│ MATERIAL COST (CAD):  $22–$35
+│ SELLING PRICE (CAD):  $60–$95
+│ ESTIMATED PROFIT:     $38–$73
+│ BEST PLATFORMS:       Facebook Marketplace QC, Kijiji
+│ SALES NOTE:           Condo/balcony market in QC. Easy upsell on popular decking season.
+│ PRICE REFERENCE:      https://www.kijiji.ca/b-canada/wood-planter-boxes/k0l0
+└──────────────────────────────────────────────────────────────────────────────
+
+┌──────────────────────────────────────────────────────────────────────────────
+│ FILE:     KregTool_Plant_Shelf.pdf
+│ PROJECT:  Indoor/Outdoor Plant Shelf
+├──────────────────────────────────────────────────────────────────────────────
+│ MATERIAL COST (CAD):  $22–$35
+│ SELLING PRICE (CAD):  $60–$90
+│ ESTIMATED PROFIT:     $38–$68
+│ BEST PLATFORMS:       Facebook Marketplace QC, Etsy Canada
+│ SALES NOTE:           Tiered plant shelf for balconies or entry halls. Good all-season seller.
+│ PRICE REFERENCE:      https://www.etsy.com/ca/market/plant_shelf_wood
+└──────────────────────────────────────────────────────────────────────────────
+
+┌──────────────────────────────────────────────────────────────────────────────
+│ FILE:     KregTool_Plant_Stand_Hanging_Bar.pdf
+│ PROJECT:  Hanging Plant Stand Bar
+├──────────────────────────────────────────────────────────────────────────────
+│ MATERIAL COST (CAD):  $18–$30
+│ SELLING PRICE (CAD):  $55–$85
+│ ESTIMATED PROFIT:     $37–$67
+│ BEST PLATFORMS:       Etsy Canada, Facebook Marketplace QC
+│ SALES NOTE:           Boho/rustic style; popular on Etsy Canada spring through fall.
+│ PRICE REFERENCE:      https://www.etsy.com/ca/market/hanging_plant_stand
+└──────────────────────────────────────────────────────────────────────────────
+
+┌──────────────────────────────────────────────────────────────────────────────
+│ FILE:     KregTool_Planter_Box_Plans_Making_Manzanita.pdf
+│ PROJECT:  Planter Box (Making Manzanita Style)
+├──────────────────────────────────────────────────────────────────────────────
+│ MATERIAL COST (CAD):  $25–$40
+│ SELLING PRICE (CAD):  $65–$100
+│ ESTIMATED PROFIT:     $40–$75
+│ BEST PLATFORMS:       Facebook Marketplace QC, Etsy Canada
+│ SALES NOTE:           Blogger-style plan with good aesthetics. Cedar or redwood finish for premium.
+│ PRICE REFERENCE:      https://www.etsy.com/ca/market/cedar_planter_box
+└──────────────────────────────────────────────────────────────────────────────
+
+┌──────────────────────────────────────────────────────────────────────────────
+│ FILE:     KregTool_Planter_Boxes.pdf
+│ PROJECT:  Planter Boxes Set (Multiple Sizes)
+├──────────────────────────────────────────────────────────────────────────────
+│ MATERIAL COST (CAD):  $25–$40 each
+│ SELLING PRICE (CAD):  $65–$100 each
+│ ESTIMATED PROFIT:     $40–$75 each
+│ BEST PLATFORMS:       Facebook Marketplace QC, Kijiji, local nurseries
+│ SALES NOTE:           Sell as a set of 3 sizes for $175–$250 combined — faster turnover.
+│ PRICE REFERENCE:      https://www.kijiji.ca/b-canada/wood-planter-boxes/k0l0
+└──────────────────────────────────────────────────────────────────────────────
+
+┌──────────────────────────────────────────────────────────────────────────────
+│ FILE:     KregTool_Scalloped_Planter.pdf
+│ PROJECT:  Scalloped-Edge Planter Box
+├──────────────────────────────────────────────────────────────────────────────
+│ MATERIAL COST (CAD):  $28–$45
+│ SELLING PRICE (CAD):  $75–$115
+│ ESTIMATED PROFIT:     $47–$87
+│ BEST PLATFORMS:       Etsy Canada, Facebook Marketplace QC
+│ SALES NOTE:           Decorative edge adds perceived value. Good candidate for Etsy handmade market.
+│ PRICE REFERENCE:      https://www.etsy.com/ca/market/cedar_planter_box
+└──────────────────────────────────────────────────────────────────────────────
+
+┌──────────────────────────────────────────────────────────────────────────────
+│ FILE:     KregTool_Tapered_Hanging_Planter.pdf
+│ PROJECT:  Tapered Hanging Planter
+├──────────────────────────────────────────────────────────────────────────────
+│ MATERIAL COST (CAD):  $18–$30
+│ SELLING PRICE (CAD):  $55–$85
+│ ESTIMATED PROFIT:     $37–$67
+│ BEST PLATFORMS:       Etsy Canada, Facebook Marketplace QC
+│ SALES NOTE:           Modern tapered shape; great for porch or patio. Sells well in pairs.
+│ PRICE REFERENCE:      https://www.etsy.com/ca/market/hanging_planter
+└──────────────────────────────────────────────────────────────────────────────
+
+┌──────────────────────────────────────────────────────────────────────────────
+│ FILE:     KregTool_Window_Flower_Box.pdf
+│ PROJECT:  Window Flower Box
+├──────────────────────────────────────────────────────────────────────────────
+│ MATERIAL COST (CAD):  $22–$35
+│ SELLING PRICE (CAD):  $60–$95
+│ ESTIMATED PROFIT:     $38–$73
+│ BEST PLATFORMS:       Facebook Marketplace QC, Kijiji, local nurseries
+│ SALES NOTE:           High spring demand. Make 10–15 units for roadside sale in April–May in QC.
+│ PRICE REFERENCE:      https://www.kijiji.ca/b-canada/wood-planter-boxes/k0l0
+└──────────────────────────────────────────────────────────────────────────────
+
+┌──────────────────────────────────────────────────────────────────────────────
+│ FILE:     KregTool_a_frame_birdhouse.pdf
+│ PROJECT:  A-Frame Birdhouse
+├──────────────────────────────────────────────────────────────────────────────
+│ MATERIAL COST (CAD):  $18–$30
+│ SELLING PRICE (CAD):  $55–$90
+│ ESTIMATED PROFIT:     $37–$72
+│ BEST PLATFORMS:       Facebook Marketplace QC, Etsy Canada, local markets
+│ SALES NOTE:           Birdhouses sell well year-round on Etsy Canada. Personalized ones fetch $80–$120.
+│ PRICE REFERENCE:      https://www.etsy.com/ca/market/birdhouse
+└──────────────────────────────────────────────────────────────────────────────
+
+┌──────────────────────────────────────────────────────────────────────────────
+│ FILE:     KregTool_clamp_rack_for_kreg_versagrip_clamps.pdf
+│ PROJECT:  Kregtool Clamp Rack For Kreg Versagrip Clamps
+├──────────────────────────────────────────────────────────────────────────────
+│ MATERIAL COST (CAD):  See individual plan details
+│ SELLING PRICE (CAD):  Varies by project type
+│ ESTIMATED PROFIT:     Varies
+│ BEST PLATFORMS:       Facebook Marketplace QC, Kijiji, Etsy Canada
+│ SALES NOTE:           Detailed pricing not yet available — refer to plan.
+│ PRICE REFERENCE:      https://www.kijiji.ca
+└──────────────────────────────────────────────────────────────────────────────
+
+┌──────────────────────────────────────────────────────────────────────────────
+│ FILE:     KregTool_desk_organizer.pdf
+│ PROJECT:  Desktop Organizer
+├──────────────────────────────────────────────────────────────────────────────
+│ MATERIAL COST (CAD):  $18–$30
+│ SELLING PRICE (CAD):  $55–$85
+│ ESTIMATED PROFIT:     $37–$67
+│ BEST PLATFORMS:       Etsy Canada, Facebook Marketplace QC
+│ SALES NOTE:           Home office/back-to-school demand is high. Custom engravings add $15–$20.
+│ PRICE REFERENCE:      https://www.etsy.com/ca/market/wood_desk_organizer
+└──────────────────────────────────────────────────────────────────────────────
+
+┌──────────────────────────────────────────────────────────────────────────────
+│ FILE:     KregTool_diy_tabletop_planter_centerpiece.pdf
+│ PROJECT:  Tabletop Planter Centerpiece
+├──────────────────────────────────────────────────────────────────────────────
+│ MATERIAL COST (CAD):  $20–$32
+│ SELLING PRICE (CAD):  $55–$85
+│ ESTIMATED PROFIT:     $35–$65
+│ BEST PLATFORMS:       Etsy Canada, Facebook Marketplace QC, local markets
+│ SALES NOTE:           Wedding/event décor market in QC. Sell sets of 3 for $150–$200.
+│ PRICE REFERENCE:      https://www.etsy.com/ca/market/wood_centerpiece
+└──────────────────────────────────────────────────────────────────────────────
+
+┌──────────────────────────────────────────────────────────────────────────────
+│ FILE:     KregTool_diy_wall_mounted_yard_tool_organizer.pdf
+│ PROJECT:  Wall-Mounted Yard Tool Organizer
+├──────────────────────────────────────────────────────────────────────────────
+│ MATERIAL COST (CAD):  $28–$45
+│ SELLING PRICE (CAD):  $70–$110
+│ ESTIMATED PROFIT:     $42–$82
+│ BEST PLATFORMS:       Facebook Marketplace QC, Kijiji, Amazon.ca
+│ SALES NOTE:           Garage organization is a hot category. Sells well in spring when people clean garages.
+│ PRICE REFERENCE:      https://www.amazon.ca/s?k=wall+mounted+tool+organizer+wood
+└──────────────────────────────────────────────────────────────────────────────
+
+┌──────────────────────────────────────────────────────────────────────────────
+│ FILE:     KregTool_easy_mailbox_tutorial.pdf
+│ PROJECT:  Decorative Wooden Mailbox
+├──────────────────────────────────────────────────────────────────────────────
+│ MATERIAL COST (CAD):  $22–$38
+│ SELLING PRICE (CAD):  $65–$100
+│ ESTIMATED PROFIT:     $42–$78
+│ BEST PLATFORMS:       Facebook Marketplace QC, Kijiji, Etsy Canada
+│ SALES NOTE:           Rustic or farmhouse-style mailboxes sell well on Etsy Canada. Add house number for premium.
+│ PRICE REFERENCE:      https://www.etsy.com/ca/market/wood_mailbox
+└──────────────────────────────────────────────────────────────────────────────
+
+┌──────────────────────────────────────────────────────────────────────────────
+│ FILE:     KregTool_laptop_tray.pdf
+│ PROJECT:  Wooden Laptop Tray
+├──────────────────────────────────────────────────────────────────────────────
+│ MATERIAL COST (CAD):  $15–$25
+│ SELLING PRICE (CAD):  $50–$80
+│ ESTIMATED PROFIT:     $35–$65
+│ BEST PLATFORMS:       Etsy Canada, Amazon.ca, Facebook Marketplace
+│ SALES NOTE:           Work-from-home item still in demand. Natural wood finish sells best on Etsy.
+│ PRICE REFERENCE:      https://www.etsy.com/ca/market/wooden_laptop_tray
+└──────────────────────────────────────────────────────────────────────────────
+
+┌──────────────────────────────────────────────────────────────────────────────
+│ FILE:     KregTool_magazine_rack.pdf
+│ PROJECT:  Wall-Mounted Magazine Rack
+├──────────────────────────────────────────────────────────────────────────────
+│ MATERIAL COST (CAD):  $18–$28
+│ SELLING PRICE (CAD):  $50–$80
+│ ESTIMATED PROFIT:     $32–$62
+│ BEST PLATFORMS:       Etsy Canada, Facebook Marketplace QC
+│ SALES NOTE:           Popular home décor item. Sells for $60–$90 in farmhouse/rustic styles.
+│ PRICE REFERENCE:      https://www.etsy.com/ca/market/magazine_rack_wood
+└──────────────────────────────────────────────────────────────────────────────
+
+┌──────────────────────────────────────────────────────────────────────────────
+│ FILE:     KregTool_modern_sunglasses_holder.pdf
+│ PROJECT:  Modern Sunglasses Holder / Display
+├──────────────────────────────────────────────────────────────────────────────
+│ MATERIAL COST (CAD):  $12–$20
+│ SELLING PRICE (CAD):  $40–$65
+│ ESTIMATED PROFIT:     $28–$53
+│ BEST PLATFORMS:       Etsy Canada, local craft fairs, Facebook Marketplace
+│ SALES NOTE:           Low material cost. Personalise with burned initials for $50–$70 sell price.
+│ PRICE REFERENCE:      https://www.etsy.com/ca/market/sunglasses_holder
+└──────────────────────────────────────────────────────────────────────────────
+
+┌──────────────────────────────────────────────────────────────────────────────
+│ FILE:     KregTool_outdoor_wine_caddy.pdf
+│ PROJECT:  Outdoor Wine Caddy / Carrier
+├──────────────────────────────────────────────────────────────────────────────
+│ MATERIAL COST (CAD):  $20–$32
+│ SELLING PRICE (CAD):  $60–$95
+│ ESTIMATED PROFIT:     $40–$75
+│ BEST PLATFORMS:       Etsy Canada, Facebook Marketplace QC, local markets
+│ SALES NOTE:           Great seasonal gift item. Peaks in summer and holiday season.
+│ PRICE REFERENCE:      https://www.etsy.com/ca/market/wine_caddy
+└──────────────────────────────────────────────────────────────────────────────
+
+┌──────────────────────────────────────────────────────────────────────────────
+│ FILE:     KregTool_tic_tac_toe_board.pdf
+│ PROJECT:  Oversized Tic-Tac-Toe Board (lawn game)
+├──────────────────────────────────────────────────────────────────────────────
+│ MATERIAL COST (CAD):  $18–$28
+│ SELLING PRICE (CAD):  $55–$85
+│ ESTIMATED PROFIT:     $37–$67
+│ BEST PLATFORMS:       Facebook Marketplace QC, Kijiji, Etsy Canada
+│ SALES NOTE:           Family lawn games sell well May–Sept. Bundle with giant Jenga for $200+ set.
+│ PRICE REFERENCE:      https://www.etsy.com/ca/market/tic_tac_toe_wood
+└──────────────────────────────────────────────────────────────────────────────
+
+┌──────────────────────────────────────────────────────────────────────────────
+│ FILE:     KregTool_utensil_and_paper_plate_caddy.pdf
+│ PROJECT:  Utensil & Paper Plate Caddy (BBQ/Outdoor)
+├──────────────────────────────────────────────────────────────────────────────
+│ MATERIAL COST (CAD):  $15–$25
+│ SELLING PRICE (CAD):  $45–$75
+│ ESTIMATED PROFIT:     $30–$60
+│ BEST PLATFORMS:       Facebook Marketplace QC, Etsy Canada, local markets
+│ SALES NOTE:           Great bundled with BBQ/outdoor sets. Sells in spring/summer.
+│ PRICE REFERENCE:      https://www.etsy.com/ca/market/paper_plate_holder_wood
+└──────────────────────────────────────────────────────────────────────────────
+
+┌──────────────────────────────────────────────────────────────────────────────
+│ FILE:     KregTool_wall_mounted_bbq_utensil_holder.pdf
+│ PROJECT:  Wall-Mounted BBQ Utensil Holder
+├──────────────────────────────────────────────────────────────────────────────
+│ MATERIAL COST (CAD):  $15–$25
+│ SELLING PRICE (CAD):  $50–$80
+│ ESTIMATED PROFIT:     $35–$65
+│ BEST PLATFORMS:       Facebook Marketplace QC, Etsy Canada, Kijiji
+│ SALES NOTE:           BBQ season item (Apr–Sept). Farmhouse or rustic stain sells best.
+│ PRICE REFERENCE:      https://www.etsy.com/ca/market/bbq_utensil_holder
+└──────────────────────────────────────────────────────────────────────────────
+
+┌──────────────────────────────────────────────────────────────────────────────
+│ FILE:     KregTool_wall_mounted_mail_and_key_rack.pdf
+│ PROJECT:  Wall-Mounted Mail & Key Rack
+├──────────────────────────────────────────────────────────────────────────────
+│ MATERIAL COST (CAD):  $15–$25
+│ SELLING PRICE (CAD):  $50–$80
+│ ESTIMATED PROFIT:     $35–$65
+│ BEST PLATFORMS:       Etsy Canada, Facebook Marketplace QC, local markets
+│ SALES NOTE:           Consistent year-round demand. Add personalization (name/initials) for $65–$90.
+│ PRICE REFERENCE:      https://www.etsy.com/ca/market/key_holder_wood
+└──────────────────────────────────────────────────────────────────────────────
+
+┌──────────────────────────────────────────────────────────────────────────────
+│ FILE:     KregTool_wall_mounted_towel_shelf.pdf
+│ PROJECT:  Wall-Mounted Towel Shelf
+├──────────────────────────────────────────────────────────────────────────────
+│ MATERIAL COST (CAD):  $20–$32
+│ SELLING PRICE (CAD):  $55–$85
+│ ESTIMATED PROFIT:     $35–$65
+│ BEST PLATFORMS:       Etsy Canada, Facebook Marketplace QC
+│ SALES NOTE:           Bathroom/laundry room decor. Consistent demand year-round.
+│ PRICE REFERENCE:      https://www.etsy.com/ca/market/towel_rack_wood
+└──────────────────────────────────────────────────────────────────────────────
+
+┌──────────────────────────────────────────────────────────────────────────────
+│ FILE:     KregTool_wine_rack_shelf.pdf
+│ PROJECT:  Wall-Mounted Wine Rack Shelf
+├──────────────────────────────────────────────────────────────────────────────
+│ MATERIAL COST (CAD):  $22–$38
+│ SELLING PRICE (CAD):  $65–$100
+│ ESTIMATED PROFIT:     $43–$78
+│ BEST PLATFORMS:       Etsy Canada, Facebook Marketplace QC, local markets
+│ SALES NOTE:           Popular kitchen/dining décor. Cedar or walnut stain commands premium prices.
+│ PRICE REFERENCE:      https://www.etsy.com/ca/market/wine_rack_wood
+└──────────────────────────────────────────────────────────────────────────────
+
+┌──────────────────────────────────────────────────────────────────────────────
+│ FILE:     Lowes_Raised_Patio_Planter_Cutting_Diagram.pdf
+│ PROJECT:  Raised Patio Planter (Lowe's Plan)
+├──────────────────────────────────────────────────────────────────────────────
+│ MATERIAL COST (CAD):  $28–$45
+│ SELLING PRICE (CAD):  $70–$110
+│ ESTIMATED PROFIT:     $42–$82
+│ BEST PLATFORMS:       Facebook Marketplace QC, Kijiji
+│ SALES NOTE:           Lowe's plans are well-engineered. Cedar build sells $90–$130 in QC spring.
+│ PRICE REFERENCE:      https://www.kijiji.ca/b-canada/wood-planter-boxes/k0l0
+└──────────────────────────────────────────────────────────────────────────────
+
+┌──────────────────────────────────────────────────────────────────────────────
+│ FILE:     Outdoor_Planter_WoodNet.pdf
+│ PROJECT:  Classic Outdoor Planter (WoodNet)
+├──────────────────────────────────────────────────────────────────────────────
+│ MATERIAL COST (CAD):  $25–$40
+│ SELLING PRICE (CAD):  $65–$100
+│ ESTIMATED PROFIT:     $40–$75
+│ BEST PLATFORMS:       Facebook Marketplace QC, Kijiji
+│ SALES NOTE:           Timeless design. Good for batch production and roadside sales.
+│ PRICE REFERENCE:      https://www.kijiji.ca/b-canada/wood-planter-boxes/k0l0
+└──────────────────────────────────────────────────────────────────────────────
+
+┌──────────────────────────────────────────────────────────────────────────────
+│ FILE:     Purdue_4H_Woodworking_Level1.pdf
+│ PROJECT:  Beginner Woodworking Projects Guide (Level 1)
+├──────────────────────────────────────────────────────────────────────────────
+│ MATERIAL COST (CAD):  N/A — Multi-project guide
+│ SELLING PRICE (CAD):  Varies
+│ ESTIMATED PROFIT:     Varies
+│ BEST PLATFORMS:       Reference guide for beginners
+│ SALES NOTE:           Contains multiple small project plans. Individual items (stools, boxes, etc.) sell $40–$80.
+│ PRICE REFERENCE:      https://extension.purdue.edu
+└──────────────────────────────────────────────────────────────────────────────
+
+┌──────────────────────────────────────────────────────────────────────────────
+│ FILE:     Railing_Planter_Plans_WoodworkCity.pdf
+│ PROJECT:  Railing Planter Box (WoodworkCity)
+├──────────────────────────────────────────────────────────────────────────────
+│ MATERIAL COST (CAD):  $22–$35
+│ SELLING PRICE (CAD):  $60–$95
+│ ESTIMATED PROFIT:     $38–$73
+│ BEST PLATFORMS:       Facebook Marketplace QC, Kijiji
+│ SALES NOTE:           Easy spring seller. Make multiples and sell at $70 each or $120/pair.
+│ PRICE REFERENCE:      https://www.kijiji.ca/b-canada/wood-planter-boxes/k0l0
+└──────────────────────────────────────────────────────────────────────────────
+
+┌──────────────────────────────────────────────────────────────────────────────
+│ FILE:     RealCedar_Planter_Box_Plan_RC241.pdf
+│ PROJECT:  Cedar Planter Box (RealCedar RC241)
+├──────────────────────────────────────────────────────────────────────────────
+│ MATERIAL COST (CAD):  $30–$50
+│ SELLING PRICE (CAD):  $80–$125
+│ ESTIMATED PROFIT:     $50–$95
+│ BEST PLATFORMS:       Facebook Marketplace QC, Etsy Canada, Kijiji
+│ SALES NOTE:           RealCedar plans are professional quality. Premium cedar finish commands $100–$130 in QC.
+│ PRICE REFERENCE:      https://www.etsy.com/ca/market/cedar_planter_box
+└──────────────────────────────────────────────────────────────────────────────
+
+┌──────────────────────────────────────────────────────────────────────────────
+│ FILE:     TWW_4_In_A_Row_Game.pdf
+│ PROJECT:  Giant 4-in-a-Row Lawn Game
+├──────────────────────────────────────────────────────────────────────────────
+│ MATERIAL COST (CAD):  $22–$38
+│ SELLING PRICE (CAD):  $60–$95
+│ ESTIMATED PROFIT:     $38–$73
+│ BEST PLATFORMS:       Facebook Marketplace QC, Etsy Canada, Kijiji
+│ SALES NOTE:           Lawn game season May–Sept. Bundle with Tic-Tac-Toe for $130–$160 combo.
+│ PRICE REFERENCE:      https://www.etsy.com/ca/market/four_in_a_row_game
+└──────────────────────────────────────────────────────────────────────────────
+
+┌──────────────────────────────────────────────────────────────────────────────
+│ FILE:     TWW_Calendar_Frame.pdf
+│ PROJECT:  Wooden Perpetual Calendar Frame
+├──────────────────────────────────────────────────────────────────────────────
+│ MATERIAL COST (CAD):  $18–$30
+│ SELLING PRICE (CAD):  $55–$90
+│ ESTIMATED PROFIT:     $37–$72
+│ BEST PLATFORMS:       Etsy Canada, Facebook Marketplace QC
+│ SALES NOTE:           Year-round gift item. Personalization adds $15–$20 to sell price.
+│ PRICE REFERENCE:      https://www.etsy.com/ca/market/wood_calendar
+└──────────────────────────────────────────────────────────────────────────────
+
+┌──────────────────────────────────────────────────────────────────────────────
+│ FILE:     TWW_Cutting_Board.pdf
+│ PROJECT:  Wooden Cutting Board
+├──────────────────────────────────────────────────────────────────────────────
+│ MATERIAL COST (CAD):  $18–$30
+│ SELLING PRICE (CAD):  $55–$110
+│ ESTIMATED PROFIT:     $37–$92
+│ BEST PLATFORMS:       Etsy Canada, Amazon.ca, local craft fairs
+│ SALES NOTE:           Top seller on Etsy Canada — especially end-grain and personalized versions. High volume sales.
+│ PRICE REFERENCE:      https://www.etsy.com/ca/market/wood_cutting_board
+└──────────────────────────────────────────────────────────────────────────────
+
+┌──────────────────────────────────────────────────────────────────────────────
+│ FILE:     TWW_Glue_Caddy.pdf
+│ PROJECT:  Workshop Glue Caddy / Organizer
+├──────────────────────────────────────────────────────────────────────────────
+│ MATERIAL COST (CAD):  $15–$25
+│ SELLING PRICE (CAD):  $45–$75
+│ ESTIMATED PROFIT:     $30–$60
+│ BEST PLATFORMS:       Etsy Canada, Facebook Marketplace QC, local woodworking groups
+│ SALES NOTE:           Niche but loyal buyer base (woodworkers). Sells to hobbyists year-round.
+│ PRICE REFERENCE:      https://www.etsy.com/ca/market/woodworking_shop_organizer
+└──────────────────────────────────────────────────────────────────────────────
+
+┌──────────────────────────────────────────────────────────────────────────────
+│ FILE:     TWW_Kids_Step_Stool.pdf
+│ PROJECT:  Children's Step Stool
+├──────────────────────────────────────────────────────────────────────────────
+│ MATERIAL COST (CAD):  $18–$30
+│ SELLING PRICE (CAD):  $60–$100
+│ ESTIMATED PROFIT:     $42–$82
+│ BEST PLATFORMS:       Facebook Marketplace QC, Etsy Canada, Kijiji
+│ SALES NOTE:           Personalized kids' step stools are top sellers on Etsy Canada ($80–$130). Very high demand.
+│ PRICE REFERENCE:      https://www.etsy.com/ca/market/personalized_step_stool
+└──────────────────────────────────────────────────────────────────────────────
+
+┌──────────────────────────────────────────────────────────────────────────────
+│ FILE:     TWW_Knife_Block.pdf
+│ PROJECT:  Wooden Knife Block
+├──────────────────────────────────────────────────────────────────────────────
+│ MATERIAL COST (CAD):  $18–$30
+│ SELLING PRICE (CAD):  $55–$90
+│ ESTIMATED PROFIT:     $37–$72
+│ BEST PLATFORMS:       Etsy Canada, Amazon.ca, local craft fairs
+│ SALES NOTE:           Kitchen item with steady demand. Magnetic strip version commands $80–$130.
+│ PRICE REFERENCE:      https://www.etsy.com/ca/market/wood_knife_block
+└──────────────────────────────────────────────────────────────────────────────
+
+┌──────────────────────────────────────────────────────────────────────────────
+│ FILE:     TWW_Magazine_Rack.pdf
+│ PROJECT:  Freestanding Magazine Rack
+├──────────────────────────────────────────────────────────────────────────────
+│ MATERIAL COST (CAD):  $18–$28
+│ SELLING PRICE (CAD):  $50–$80
+│ ESTIMATED PROFIT:     $32–$62
+│ BEST PLATFORMS:       Etsy Canada, Facebook Marketplace QC
+│ SALES NOTE:           Home décor staple. Farmhouse or mid-century style sells fastest.
+│ PRICE REFERENCE:      https://www.etsy.com/ca/market/magazine_rack_wood
+└──────────────────────────────────────────────────────────────────────────────
+
+┌──────────────────────────────────────────────────────────────────────────────
+│ FILE:     TWW_Pet_Steps.pdf
+│ PROJECT:  Pet Steps / Dog Stairs
+├──────────────────────────────────────────────────────────────────────────────
+│ MATERIAL COST (CAD):  $20–$35
+│ SELLING PRICE (CAD):  $60–$100
+│ ESTIMATED PROFIT:     $40–$80
+│ BEST PLATFORMS:       Facebook Marketplace QC, Kijiji, Etsy Canada
+│ SALES NOTE:           Pet furniture is a booming category. Sells fast on Facebook QC — dogs and cats owners everywhere.
+│ PRICE REFERENCE:      https://www.kijiji.ca/b-pet-accessories/canada/dog-stairs/k0c106l0
+└──────────────────────────────────────────────────────────────────────────────
+
+┌──────────────────────────────────────────────────────────────────────────────
+│ FILE:     TWW_Poker_Chip_Tray.pdf
+│ PROJECT:  Wooden Poker Chip Tray
+├──────────────────────────────────────────────────────────────────────────────
+│ MATERIAL COST (CAD):  $15–$25
+│ SELLING PRICE (CAD):  $45–$75
+│ ESTIMATED PROFIT:     $30–$60
+│ BEST PLATFORMS:       Etsy Canada, Amazon.ca, local gift shops
+│ SALES NOTE:           Niche gift item. Sells at Christmas and Father's Day. Custom laser engrave for premium.
+│ PRICE REFERENCE:      https://www.etsy.com/ca/market/poker_chip_tray
+└──────────────────────────────────────────────────────────────────────────────
+
+┌──────────────────────────────────────────────────────────────────────────────
+│ FILE:     TWW_Salt_Cellar.pdf
+│ PROJECT:  Wooden Salt Cellar / Pinch Pot
+├──────────────────────────────────────────────────────────────────────────────
+│ MATERIAL COST (CAD):  $10–$18
+│ SELLING PRICE (CAD):  $35–$60
+│ ESTIMATED PROFIT:     $25–$50
+│ BEST PLATFORMS:       Etsy Canada, local craft fairs
+│ SALES NOTE:           Very low material cost. Sells at craft fairs and Etsy. Make batches of 10+.
+│ PRICE REFERENCE:      https://www.etsy.com/ca/market/wood_salt_cellar
+└──────────────────────────────────────────────────────────────────────────────
+
+
+────────────────────────────────────────────────────────────────────────────────
+Total projects listed: 63
+Pricing data matched:  62
+Needs pricing update:  KregTool_clamp_rack_for_kreg_versagrip_clamps.pdf
+
+DISCLAIMER: Selling prices are market estimates based on active listings as of
+April 2026. Actual prices may vary. Always research current market conditions
+before listing. This guide is for planning purposes only.

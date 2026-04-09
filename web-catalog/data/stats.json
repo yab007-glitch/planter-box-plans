@@ -1,0 +1,45 @@
+{
+  "totalProjects": 200,
+  "byCategory": {
+    "Woodworking Projects": 76,
+    "Cabinets": 5,
+    "Planter Boxes": 44,
+    "Raised Beds": 28,
+    "Beds": 3,
+    "Bookcases": 3,
+    "Tables": 22,
+    "Benches": 6,
+    "Chairs": 3,
+    "Shelving": 8,
+    "Vertical Gardens": 2
+  },
+  "byDifficulty": {
+    "Intermediate": 74,
+    "Expert": 6,
+    "Easy": 120
+  },
+  "byProfitRange": {
+    "$500+ Profit Per Project": 12,
+    "$200-$500 Profit Per Project": 40,
+    "$100-$200 Profit Per Project": 85,
+    "$50-$100 Profit Per Project": 63
+  },
+  "bySource": {
+    "Real Cedar": 7,
+    "Kreg Tool": 109,
+    "Unknown": 40,
+    "T W W": 30,
+    "Archive Org": 5,
+    "Purdue": 2,
+    "Fine Woodworking": 1,
+    "Family Handyman": 1,
+    "Aged Web": 2,
+    "Lowes": 1,
+    "Bobs Plans": 1,
+    "Ag Mech": 1
+  },
+  "totalEstimatedHours": 1368,
+  "totalPotentialProfit": 55165,
+  "totalMaterialInvestment": 9900,
+  "extractionDate": "2026-04-09T15:56:09.814Z"
+}
