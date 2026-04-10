@@ -28,7 +28,11 @@ const state = {
     postalCode: '',
     radius: 25
   },
-  activeFilters: []
+  activeFilters: [],
+  pagination: {
+    page: 1,
+    perPage: 24
+  }
 };
 
 // ========================================
@@ -245,6 +249,23 @@ function initializeEventListeners() {
   // Calculator
   elements.calcCalculate.addEventListener('click', calculateTimeToProfit);
   
+  // Pagination
+  document.getElementById('prev-page').addEventListener('click', () => {
+    if (state.pagination.page > 1) {
+      state.pagination.page--;
+      renderProjects();
+      document.getElementById('sort-controls').scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  });
+  document.getElementById('next-page').addEventListener('click', () => {
+    const totalPages = Math.ceil(state.filteredProjects.length / state.pagination.perPage);
+    if (state.pagination.page < totalPages) {
+      state.pagination.page++;
+      renderProjects();
+      document.getElementById('sort-controls').scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  });
+  
   // Modal close buttons
   elements.closePdfModal.addEventListener('click', () => closeModal('pdf-modal'));
   elements.closeDetailModal.addEventListener('click', () => closeModal('detail-modal'));
@@ -366,6 +387,7 @@ function toggleFilterSection(toggle) {
 // FILTER LOGIC
 // ========================================
 function applyFilters() {
+  state.pagination.page = 1;
   state.filteredProjects = state.projects.filter(project => {
     // Category filter
     if (!state.filters.categories.includes(project.category)) return false;
@@ -545,6 +567,11 @@ function renderAll() {
 }
 
 function renderProjects() {
+  const start = (state.pagination.page - 1) * state.pagination.perPage;
+  const end = start + state.pagination.perPage;
+  const pageProjects = state.filteredProjects.slice(start, end);
+  const totalPages = Math.ceil(state.filteredProjects.length / state.pagination.perPage);
+  
   if (state.filteredProjects.length === 0) {
     elements.projectsContainer.innerHTML = `
       <div class="empty-state" style="grid-column: 1 / -1;">
@@ -553,10 +580,13 @@ function renderProjects() {
         <p>Try adjusting your filters to see more results</p>
       </div>
     `;
+    updatePagination(totalPages);
     return;
   }
   
-  elements.projectsContainer.innerHTML = state.filteredProjects.map(project => `
+  elements.projectsContainer.innerHTML = pageProjects.map(project => {
+    try {
+      return `
     <article class="project-card animate-fadeInUp" data-category="${project.category}" data-id="${project.id}">
       <div class="project-header">
         <span class="project-category">${project.category}</span>
@@ -595,7 +625,33 @@ function renderProjects() {
         </button>
       </div>
     </article>
-  `).join('');
+  `;
+    } catch (err) {
+      console.error('Error rendering project:', project.id, err);
+      return '';
+    }
+  }).join('');
+  
+  updatePagination(totalPages);
+}
+
+function updatePagination(totalPages) {
+  const pageInfo = document.getElementById('page-info');
+  const prevBtn = document.getElementById('prev-page');
+  const nextBtn = document.getElementById('next-page');
+  const paginationEl = document.getElementById('pagination');
+  
+  if (!pageInfo) return;
+  
+  if (totalPages <= 1) {
+    paginationEl.style.display = 'none';
+    return;
+  }
+  
+  paginationEl.style.display = 'flex';
+  pageInfo.textContent = `Page ${state.pagination.page} of ${totalPages}`;
+  prevBtn.disabled = state.pagination.page <= 1;
+  nextBtn.disabled = state.pagination.page >= totalPages;
 }
 
 function renderTrending() {
@@ -710,33 +766,68 @@ function renderHeatmap() {
 }
 
 function renderSeasonal() {
-  const months = [
-    { name: 'Jan', peak: ['Indoor Furniture'] },
-    { name: 'Feb', peak: ['Indoor Furniture'] },
-    { name: 'Mar', peak: ['Planter Boxes', 'Raised Beds'] },
-    { name: 'Apr', peak: ['Planter Boxes', 'Raised Beds', 'Garden Projects'] },
-    { name: 'May', peak: ['Planter Boxes', 'Garden Projects', 'Outdoor Furniture'] },
-    { name: 'Jun', peak: ['Outdoor Furniture', 'Planter Boxes'] },
-    { name: 'Jul', peak: ['Outdoor Furniture', 'Tables'] },
-    { name: 'Aug', peak: ['Outdoor Furniture', 'Storage'] },
-    { name: 'Sep', peak: ['Indoor Furniture', 'Shelves'] },
-    { name: 'Oct', peak: ['Indoor Furniture', 'Tables'] },
-    { name: 'Nov', peak: ['Indoor Furniture', 'Storage'] },
-    { name: 'Dec', peak: ['Indoor Furniture', 'Storage'] }
+  const monthNames = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  const monthsData = state.seasonalData ? state.seasonalData.months : null;
+  
+  const defaultMonths = [
+    { peakCategories: ['Indoor Furniture'], demand: 60 },
+    { peakCategories: ['Indoor Furniture'], demand: 65 },
+    { peakCategories: ['Planter Boxes', 'Raised Beds'], demand: 85 },
+    { peakCategories: ['Planter Boxes', 'Raised Beds', 'Garden Projects'], demand: 95 },
+    { peakCategories: ['Planter Boxes', 'Garden Projects', 'Outdoor Furniture'], demand: 100 },
+    { peakCategories: ['Outdoor Furniture', 'Planter Boxes'], demand: 95 },
+    { peakCategories: ['Outdoor Furniture', 'Tables'], demand: 90 },
+    { peakCategories: ['Outdoor Furniture', 'Storage'], demand: 85 },
+    { peakCategories: ['Indoor Furniture', 'Shelves'], demand: 75 },
+    { peakCategories: ['Indoor Furniture', 'Tables'], demand: 80 },
+    { peakCategories: ['Indoor Furniture', 'Storage'], demand: 85 },
+    { peakCategories: ['Indoor Furniture', 'Storage'], demand: 90 }
   ];
   
+  const months = monthsData || defaultMonths;
+  
   elements.seasonalContent.innerHTML = months.map((month, index) => {
-    const isPeak = [2, 3, 4, 5, 6].includes(index); // Mar-Jul peak
+    const isPeak = month.demand >= 85;
     return `
       <div class="month-card ${isPeak ? 'peak' : ''}">
-        <div class="month-name">${month.name}</div>
-        <div class="month-category">${month.peak[0]}</div>
+        <div class="month-name">${monthNames[index]}</div>
+        <div class="month-category">${month.peakCategories ? month.peakCategories[0] : ''}</div>
+        ${month.demand ? `<div style="font-size:0.75rem;margin-top:4px;color:var(--warm-gray);">${month.demand}% demand</div>` : ''}
       </div>
     `;
   }).join('');
 }
 
 function renderMaterials() {
+  if (state.materialCosts && state.materialCosts.materials) {
+    const data = state.materialCosts;
+    elements.materialsContent.innerHTML = `
+      <table class="materials-table">
+        <thead>
+          <tr>
+            <th>Material</th>
+            <th>Unit</th>
+            <th>Price (${data.currency || 'CAD'})</th>
+            <th>Trend</th>
+          </tr>
+        </thead>
+        <tbody>
+          ${data.materials.map(m => `
+            <tr>
+              <td><i class="fas fa-cube" style="color: var(--wood-medium); margin-right: 8px;"></i> ${m.name}</td>
+              <td>${m.unit}</td>
+              <td class="material-price">$${m.price.toFixed(2)}</td>
+              <td><span style="color: ${m.trend === 'up' ? 'var(--danger)' : m.trend === 'down' ? 'var(--success)' : 'var(--warm-gray)'}"><i class="fas fa-${m.trend === 'up' ? 'arrow-up' : m.trend === 'down' ? 'arrow-down' : 'minus'}"></i> ${m.trend}</span></td>
+            </tr>
+          `).join('')}
+        </tbody>
+      </table>
+      <div style="padding: 12px 20px; font-size: 0.8rem; color: var(--warm-gray);">
+        <i class="fas fa-map-marker-alt"></i> ${data.region} · Last updated: ${new Date(data.lastUpdated).toLocaleDateString()}
+      </div>
+    `;
+    return;
+  }
   const materials = [
     { name: '2x4 Lumber (8ft)', price: 4.50, unit: 'each' },
     { name: '2x6 Lumber (8ft)', price: 6.75, unit: 'each' },
@@ -776,6 +867,7 @@ function renderMaterials() {
 // API CALLS
 // ========================================
 async function fetchTrendsData(postalCode = 'H3A0G4', radius = 25) {
+  showLoading(elements.trendingGrid);
   try {
     const response = await fetch(`/api/trends?postalCode=${postalCode}&radius=${radius}`);
     if (response.ok) {
@@ -802,6 +894,7 @@ async function fetchSeasonalData() {
 }
 
 async function fetchMaterialCosts() {
+  showLoading(elements.materialsContent);
   try {
     const postalCode = elements.postalCode.value.trim() || 'H3A0G4';
     const response = await fetch(`/api/material-costs?postalCode=${postalCode}`);
@@ -818,11 +911,13 @@ function generateFallbackTrends() {
   state.trendsData = {};
   
   categories.forEach(cat => {
-    state.trendsData[cat] = {
-      score: Math.floor(Math.random() * 60) + 40,
-      trend: Math.floor(Math.random() * 40) - 20,
-      volume: `${Math.floor(Math.random() * 50) + 10}K`
-    };
+    // Simple hash for deterministic "random"
+    const hash = cat.split('').reduce((acc, c) => ((acc << 5) - acc + c.charCodeAt(0)) | 0, 0);
+    const score = 40 + Math.abs(hash % 50);
+    const trend = (hash % 40) - 20;
+    const volume = (10 + Math.abs(hash % 40)) + 'K';
+    
+    state.trendsData[cat] = { score, trend, volume };
   });
 }
 
@@ -1014,10 +1109,9 @@ function openPdf(projectId) {
   const project = state.projects.find(p => p.id === projectId);
   if (!project || !project.relativePath) return;
   
-  // Construct path relative to the project root
-  const pdfPath = `../${project.relativePath}`;
+  const pdfPath = `/plans/${encodeURIComponent(project.relativePath)}`;
   elements.pdfViewer.src = pdfPath;
-  elements.modalTitle.textContent = project.title;
+  elements.modalTitle.textContent = project.title || project.name || 'Project';
   
   closeModal('detail-modal');
   openModal('pdf-modal');
@@ -1100,11 +1194,44 @@ function renderCompare() {
     </div>
   `;
   
-  // Clear other charts (would need charting library for full implementation)
-  document.getElementById('compare-chart-time').querySelector('.chart-area').innerHTML = 
-    '<div style="padding: 20px; color: var(--warm-gray);"><i class="fas fa-info-circle"></i> Time comparison chart would render here</div>';
-  document.getElementById('compare-chart-materials').querySelector('.chart-area').innerHTML = 
-    '<div style="padding: 20px; color: var(--warm-gray);"><i class="fas fa-info-circle"></i> Material cost breakdown would render here</div>';
+  // Time comparison chart
+  const maxHours = Math.max(...projects.map(p => p.estimatedHours || 0));
+  document.getElementById('compare-chart-time').querySelector('.chart-area').innerHTML = `
+    <div style="display: flex; align-items: flex-end; gap: 20px; height: 100%; padding: 20px; justify-content: center;">
+      ${projects.map(p => `
+        <div style="text-align: center;">
+          <div style="font-weight: 700; margin-bottom: 4px; color: var(--forest-green);">${p.estimatedHours || 0} hrs</div>
+          <div style="width: 60px; background: linear-gradient(to top, var(--wood-medium), var(--wood-light)); 
+                      height: ${((p.estimatedHours || 0) / maxHours * 150)}px; border-radius: 4px 4px 0 0;">
+          </div>
+          <div style="margin-top: 8px; font-size: 0.75rem; max-width: 80px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
+            ${p.title}
+          </div>
+        </div>
+      `).join('')}
+    </div>
+  `;
+  
+  // Material cost breakdown chart
+  const maxCost = Math.max(...projects.map(p => p.materialCost || 0));
+  document.getElementById('compare-chart-materials').querySelector('.chart-area').innerHTML = `
+    <div style="display: flex; flex-direction: column; gap: 12px; padding: 16px; height: 100%; justify-content: center;">
+      ${projects.map(p => {
+        const costWidth = ((p.materialCost || 0) / maxCost * 100);
+        const profitWidth = ((p.profit || 0) / maxProfit * 100);
+        return `
+          <div style="display: flex; align-items: center; gap: 12px;">
+            <div style="width: 80px; font-size: 0.75rem; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">${p.title}</div>
+            <div style="flex: 1; height: 24px; background: var(--beige); border-radius: 4px; overflow: hidden; position: relative;">
+              <div style="height: 100%; width: ${costWidth}%; background: var(--danger); border-radius: 4px 0 0 4px; float: left;"></div>
+              <div style="height: 100%; width: ${profitWidth}%; background: var(--success); position: absolute; left: ${costWidth}%;"></div>
+            </div>
+            <div style="font-size: 0.75rem;">$${p.materialCost || 0}</div>
+          </div>
+        `;
+      }).join('')}
+    </div>
+  `;
 }
 
 function filterByCategory(category) {
@@ -1273,7 +1400,6 @@ function debounce(func, wait) {
 }
 
 function showError(message) {
-  // Simple toast notification
   const toast = document.createElement('div');
   toast.style.cssText = `
     position: fixed;
@@ -1293,6 +1419,15 @@ function showError(message) {
   setTimeout(() => {
     toast.remove();
   }, 3000);
+}
+
+function showLoading(container) {
+  container.innerHTML = `
+    <div class="empty-state" style="grid-column: 1 / -1;">
+      <i class="fas fa-spinner fa-spin" style="font-size: 2rem; color: var(--wood-medium);"></i>
+      <p>Loading data...</p>
+    </div>
+  `;
 }
 
 function showSuccess(message) {

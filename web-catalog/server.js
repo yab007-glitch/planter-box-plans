@@ -17,6 +17,24 @@ try {
   googleTrends = null;
 }
 
+// Rate limiting
+let rateLimit;
+try {
+  rateLimit = require('express-rate-limit');
+} catch (e) {
+  rateLimit = null;
+}
+
+// Postal code validation
+function validatePostalCode(code) {
+  if (!code || typeof code !== 'string') return false;
+  const clean = code.toUpperCase().replace(/\s/g, '');
+  if (/^[A-Z]\d[A-Z]\d[A-Z]\d$/.test(clean)) return true;
+  if (/^[A-Z]\d[A-Z]$/.test(clean)) return true;
+  if (/^\d{5}$/.test(clean)) return true;
+  return false;
+}
+
 const app = express();
 const PORT = process.env.PORT || 3000;
 
@@ -24,8 +42,27 @@ const PORT = process.env.PORT || 3000;
 app.use(cors());
 app.use(express.json());
 
+// Rate limiting (if available)
+if (rateLimit) {
+  const apiLimiter = rateLimit({
+    windowMs: 60 * 1000,
+    max: 30,
+    message: { error: 'Too many requests, please try again later' }
+  });
+  app.use('/api/', apiLimiter);
+}
+
 // Serve static files from the web-catalog directory
 app.use(express.static(path.join(__dirname)));
+
+// Serve PDF files from parent directory
+app.use('/plans', express.static(path.join(__dirname, '..'), {
+  setHeaders: (res, filePath) => {
+    if (filePath.endsWith('.pdf')) {
+      res.setHeader('Content-Type', 'application/pdf');
+    }
+  }
+}));
 
 // ========================================
 // POSTAL CODE TO GEO MAPPING
@@ -239,6 +276,10 @@ app.get('/api/trends', async (req, res) => {
     return res.status(400).json({ error: 'Postal code is required' });
   }
   
+  if (!validatePostalCode(postalCode)) {
+    return res.status(400).json({ error: 'Invalid postal code format' });
+  }
+  
   const geoData = getGeoFromPostalCode(postalCode);
   
   // If Google Trends API is available, try to fetch real data
@@ -359,6 +400,10 @@ app.get('/api/material-costs', (req, res) => {
     return res.status(400).json({ error: 'Postal code is required' });
   }
   
+  if (!validatePostalCode(postalCode)) {
+    return res.status(400).json({ error: 'Invalid postal code format' });
+  }
+  
   const prefix = getPostalCodePrefix(postalCode);
   
   // Try to find specific region data, fallback to default
@@ -385,6 +430,12 @@ app.get('/api/material-costs', (req, res) => {
  * GET /api/projects
  * Returns: All projects (optional filtering)
  */
+
+// Keep state in memory (in production, use a database)
+const state = {
+  projects: []
+};
+
 app.get('/api/projects', (req, res) => {
   const { category, difficulty, minProfit, maxHours } = req.query;
   
@@ -473,11 +524,6 @@ app.listen(PORT, () => {
   console.log(`  - GET /api/projects`);
   console.log(`  - GET /api/stats`);
 });
-
-// Keep state in memory (in production, use a database)
-const state = {
-  projects: []
-};
 
 // Load projects on startup
 try {

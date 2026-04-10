@@ -1983,3 +1983,61 @@ section {
   opacity: 1;
   visibility: visible;
 }
+
+/* ========================================
+   PAGINATION
+   ======================================== */
+.pagination {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  padding: 24px 0;
+  margin-top: 16px;
+}
+
+.pagination button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.pagination #page-info {
+  font-size: 0.9rem;
+  color: var(--warm-gray);
+  min-width: 120px;
+  text-align: center;
+}
+
+/* ========================================
+   DARK MODE HEATMAP FIXES
+   ======================================== */
+[data-theme="dark"] .heatmap-card.low {
+  background: #1a3020;
+}
+[data-theme="dark"] .heatmap-card.low .heatmap-category {
+  color: #81C784;
+}
+[data-theme="dark"] .heatmap-card.low .heatmap-count {
+  color: rgba(129, 199, 132, 0.7);
+}
+
+[data-theme="dark"] .heatmap-card.medium {
+  background: #2a3520;
+}
+[data-theme="dark"] .heatmap-card.medium .heatmap-category {
+  color: #AED581;
+}
+
+[data-theme="dark"] .heatmap-card.high {
+  background: #3a2a10;
+}
+[data-theme="dark"] .heatmap-card.high .heatmap-category {
+  color: #FFB74D;
+}
+
+[data-theme="dark"] .heatmap-card.hot {
+  background: #3a1515;
+}
+[data-theme="dark"] .heatmap-card.hot .heatmap-category {
+  color: #EF5350;
+}
