@@ -10,6 +10,10 @@
       "dest": "/api/pdf.js?path=$1"
     },
     {
+      "src": "/web-catalog/(.*)",
+      "dest": "/web-catalog/$1"
+    },
+    {
       "src": "/(.*)",
       "dest": "/web-catalog/$1"
     }

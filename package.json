@@ -3,8 +3,7 @@
   "version": "1.0.0",
   "description": "Woodworking profit calculator and project catalog",
   "scripts": {
-    "dev": "cd web-catalog && node server.js",
-    "build": "echo 'Static files are already built'"
+    "dev": "cd web-catalog && node server.js"
   },
   "dependencies": {
     "cors": "^2.8.5",
