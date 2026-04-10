@@ -1,7 +1,14 @@
 {
+  "name": "woodworking-pro",
+  "version": "1.0.0",
+  "description": "Woodworking profit calculator and project catalog",
+  "scripts": {
+    "dev": "cd web-catalog && node server.js"
+  },
   "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.18.2",
     "fs-extra": "^11.3.4",
-    "node-fetch": "^3.3.2",
     "pdf-parse": "^2.4.5"
   },
   "devDependencies": {
@@ -14,5 +21,8 @@
     "tailwindcss": "^4.2.2",
     "typescript": "^6.0.2",
     "vite": "^8.0.8"
+  },
+  "engines": {
+    "node": "18.x"
   }
 }

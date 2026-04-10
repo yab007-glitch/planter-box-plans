@@ -874,6 +874,8 @@ async function fetchTrendsData(postalCode = 'H3A0G4', radius = 25) {
       state.trendsData = await response.json();
       renderTrending();
       renderHeatmap();
+    } else {
+      throw new Error('Failed to fetch trends');
     }
   } catch (error) {
     console.error('Failed to fetch trends:', error);
@@ -900,6 +902,7 @@ async function fetchMaterialCosts() {
     const response = await fetch(`/api/material-costs?postalCode=${postalCode}`);
     if (response.ok) {
       state.materialCosts = await response.json();
+      renderMaterials();
     }
   } catch (error) {
     console.error('Failed to fetch material costs:', error);
