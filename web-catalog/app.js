@@ -1,1010 +1,1318 @@
 /**
- * DIY Woodworking Project Catalog - Main Application
- * Interactive catalog with filtering, PDF viewing, and market research
+ * Woodworking Pro - App Logic
+ * Complete JavaScript functionality for the profit calculator
  */
 
-// Global state
-let projects = [];
-let filteredProjects = [];
-let compareList = [];
-let currentView = 'grid';
+// ========================================
+// STATE MANAGEMENT
+// ========================================
+const state = {
+  projects: [],
+  filteredProjects: [],
+  compareList: [],
+  filters: {
+    categories: [],
+    difficulties: ['Easy', 'Intermediate', 'Expert'],
+    profitRanges: ['$50-$100', '$100-$200', '$200-$500', '$500+'],
+    minHours: null,
+    maxHours: null,
+    tools: [],
+    search: ''
+  },
+  sort: 'profit-desc',
+  view: 'grid',
+  trendsData: null,
+  seasonalData: null,
+  materialCosts: null,
+  location: {
+    postalCode: '',
+    radius: 25
+  },
+  activeFilters: []
+};
 
-// DOM Elements
+// ========================================
+// DOM ELEMENTS
+// ========================================
 const elements = {
-    container: document.getElementById('projects-container'),
-    totalProjects: document.getElementById('total-projects'),
-    totalProfit: document.getElementById('total-profit'),
-    totalHours: document.getElementById('total-hours'),
-    avgRoi: document.getElementById('avg-roi'),
-    categoryFilters: document.getElementById('category-filters'),
-    toolsFilters: document.getElementById('tools-filters'),
-    searchInput: document.getElementById('search-input'),
-    sortSelect: document.getElementById('sort-select'),
-    minHours: document.getElementById('min-hours'),
-    maxHours: document.getElementById('max-hours'),
-    postalCode: document.getElementById('postal-code'),
-    radius: document.getElementById('radius'),
-    radiusValue: document.getElementById('radius-value'),
-    clearFilters: document.getElementById('clear-filters'),
-    pdfModal: document.getElementById('pdf-modal'),
-    detailModal: document.getElementById('detail-modal'),
-    compareModal: document.getElementById('compare-modal'),
-    pdfViewer: document.getElementById('pdf-viewer'),
-    modalTitle: document.getElementById('modal-title'),
-    detailTitle: document.getElementById('detail-title'),
-    detailContent: document.getElementById('detail-content'),
-    compareContent: document.getElementById('compare-content'),
-    activeFilters: document.getElementById('active-filters')
+  // Containers
+  projectsContainer: document.getElementById('projects-container'),
+  trendingGrid: document.getElementById('trending-grid'),
+  topPicksGrid: document.getElementById('top-picks-grid'),
+  heatmapGrid: document.getElementById('heatmap-grid'),
+  seasonalContent: document.getElementById('seasonal-content'),
+  materialsContent: document.getElementById('materials-content'),
+  activeFilters: document.getElementById('active-filters'),
+  categoryFilters: document.getElementById('category-filters'),
+  toolsFilters: document.getElementById('tools-filters'),
+  
+  // Stats
+  totalProjects: document.getElementById('total-projects'),
+  totalProfit: document.getElementById('total-profit'),
+  totalHours: document.getElementById('total-hours'),
+  avgRoi: document.getElementById('avg-roi'),
+  resultsCount: document.getElementById('results-count'),
+  
+  // Inputs
+  searchInput: document.getElementById('search-input'),
+  minHours: document.getElementById('min-hours'),
+  maxHours: document.getElementById('max-hours'),
+  postalCode: document.getElementById('postal-code'),
+  radius: document.getElementById('radius'),
+  radiusValue: document.getElementById('radius-value'),
+  sortSelect: document.getElementById('sort-select'),
+  
+  // Buttons
+  mobileMenuBtn: document.getElementById('mobile-menu-btn'),
+  sidebarCloseBtn: document.getElementById('sidebar-close-btn'),
+  darkModeToggle: document.getElementById('dark-mode-toggle'),
+  darkModeIcon: document.getElementById('dark-mode-icon'),
+  clearFilters: document.getElementById('clear-filters'),
+  applyLocation: document.getElementById('apply-location'),
+  exportBtn: document.getElementById('export-btn'),
+  calcCalculate: document.getElementById('calc-calculate'),
+  
+  // View buttons
+  navButtons: document.querySelectorAll('.nav-btn[data-view]'),
+  
+  // Modals
+  pdfModal: document.getElementById('pdf-modal'),
+  detailModal: document.getElementById('detail-modal'),
+  compareModal: document.getElementById('compare-modal'),
+  exportModal: document.getElementById('export-modal'),
+  
+  // Modal content
+  modalTitle: document.getElementById('modal-title'),
+  pdfViewer: document.getElementById('pdf-viewer'),
+  detailContent: document.getElementById('detail-content'),
+  compareContent: document.getElementById('compare-content'),
+  
+  // Modal close buttons
+  closePdfModal: document.getElementById('close-pdf-modal'),
+  closeDetailModal: document.getElementById('close-detail-modal'),
+  closeCompareModal: document.getElementById('close-compare-modal'),
+  closeExportModal: document.getElementById('close-export-modal'),
+  
+  // Export buttons
+  exportCsv: document.getElementById('export-csv'),
+  exportJson: document.getElementById('export-json'),
+  exportPrint: document.getElementById('export-print'),
+  exportCopyLink: document.getElementById('export-copy-link'),
+  
+  // Sidebar
+  sidebar: document.getElementById('sidebar'),
+  
+  // Filter toggles
+  filterToggles: document.querySelectorAll('.filter-toggle')
 };
 
-// Montreal postal code areas with rough coordinates for distance calculation
-const montrealAreas = {
-    'H1A': { name: 'Rivière-des-Prairies', lat: 45.63, lng: -73.52 },
-    'H1B': { name: 'Pointe-aux-Trembles', lat: 45.65, lng: -73.50 },
-    'H1C': { name: 'Charlemagne', lat: 45.70, lng: -73.48 },
-    'H1E': { name: 'Anjou', lat: 45.60, lng: -73.55 },
-    'H1G': { name: 'Montréal-Nord', lat: 45.60, lng: -73.63 },
-    'H1H': { name: 'Montréal-Nord', lat: 45.62, lng: -73.62 },
-    'H1J': { name: 'Saint-Léonard', lat: 45.58, lng: -73.58 },
-    'H1K': { name: 'Saint-Léonard', lat: 45.59, lng: -73.57 },
-    'H1L': { name: 'Mercier', lat: 45.58, lng: -73.55 },
-    'H1M': { name: 'Montréal-Nord', lat: 45.59, lng: -73.64 },
-    'H1N': { name: 'Saint-Léonard', lat: 45.57, lng: -73.59 },
-    'H1P': { name: 'Saint-Léonard', lat: 45.56, lng: -73.60 },
-    'H1R': { name: 'Saint-Léonard', lat: 45.55, lng: -73.61 },
-    'H1S': { name: 'Villeray', lat: 45.55, lng: -73.60 },
-    'H1T': { name: 'Villeray', lat: 45.54, lng: -73.61 },
-    'H1V': { name: 'Maisonneuve', lat: 45.55, lng: -73.56 },
-    'H1W': { name: 'Hochelaga', lat: 45.54, lng: -73.55 },
-    'H1X': { name: 'Hochelaga', lat: 45.53, lng: -73.54 },
-    'H1Y': { name: 'Hochelaga', lat: 45.52, lng: -73.54 },
-    'H1Z': { name: 'Hochelaga', lat: 45.51, lng: -73.53 },
-    'H2A': { name: 'Villeray', lat: 45.54, lng: -73.62 },
-    'H2B': { name: 'Villeray', lat: 45.55, lng: -73.63 },
-    'H2C': { name: 'Ahuntsic', lat: 45.55, lng: -73.65 },
-    'H2E': { name: 'Villeray', lat: 45.53, lng: -73.62 },
-    'H2G': { name: 'Petite-Italie', lat: 45.53, lng: -73.61 },
-    'H2H': { name: 'Plateau-Mont-Royal', lat: 45.52, lng: -73.58 },
-    'H2J': { name: 'Plateau-Mont-Royal', lat: 45.52, lng: -73.58 },
-    'H2K': { name: 'Plateau-Mont-Royal', lat: 45.51, lng: -73.58 },
-    'H2L': { name: 'Plateau-Mont-Royal', lat: 45.51, lng: -73.57 },
-    'H2M': { name: 'Ahuntsic', lat: 45.54, lng: -73.65 },
-    'H2N': { name: 'Ahuntsic', lat: 45.53, lng: -73.65 },
-    'H2P': { name: 'Ahuntsic', lat: 45.52, lng: -73.66 },
-    'H2R': { name: 'Ahuntsic', lat: 45.51, lng: -73.67 },
-    'H2S': { name: 'Mile End', lat: 45.52, lng: -73.60 },
-    'H2T': { name: 'Mile End', lat: 45.51, lng: -73.60 },
-    'H2V': { name: 'Côte-des-Neiges', lat: 45.50, lng: -73.63 },
-    'H2W': { name: 'Côte-des-Neiges', lat: 45.49, lng: -73.63 },
-    'H2X': { name: 'Downtown', lat: 45.49, lng: -73.58 },
-    'H2Y': { name: 'Old Montreal', lat: 45.50, lng: -73.55 },
-    'H2Z': { name: 'Downtown', lat: 45.50, lng: -73.57 },
-    'H3A': { name: 'McGill Ghetto', lat: 45.50, lng: -73.58 },
-    'H3B': { name: 'Downtown', lat: 45.50, lng: -73.57 },
-    'H3C': { name: 'Griffintown', lat: 45.49, lng: -73.56 },
-    'H3E': { name: 'Pointe-Saint-Charles', lat: 45.48, lng: -73.56 },
-    'H3G': { name: 'Downtown', lat: 45.49, lng: -73.57 },
-    'H3H': { name: 'Downtown', lat: 45.48, lng: -73.58 },
-    'H3J': { name: 'Little Burgundy', lat: 45.48, lng: -73.58 },
-    'H3K': { name: 'Pointe-Saint-Charles', lat: 45.47, lng: -73.57 },
-    'H3L': { name: 'Ahuntsic', lat: 45.50, lng: -73.68 },
-    'H3M': { name: 'Ahuntsic', lat: 45.49, lng: -73.68 },
-    'H3N': { name: 'Ahuntsic', lat: 45.48, lng: -73.69 },
-    'H3P': { name: 'Outremont', lat: 45.51, lng: -73.61 },
-    'H3R': { name: 'Côte-des-Neiges', lat: 45.48, lng: -73.63 },
-    'H3S': { name: 'Côte-des-Neiges', lat: 45.47, lng: -73.64 },
-    'H3T': { name: 'Côte-des-Neiges', lat: 45.48, lng: -73.62 },
-    'H3V': { name: 'Côte-des-Neiges', lat: 45.47, lng: -73.62 },
-    'H3W': { name: 'Côte-des-Neiges', lat: 45.46, lng: -73.63 },
-    'H3X': { name: 'Snowdon', lat: 45.47, lng: -73.63 },
-    'H3Y': { name: 'Westmount', lat: 45.48, lng: -73.60 },
-    'H3Z': { name: 'Westmount', lat: 45.47, lng: -73.60 },
-    'H4A': { name: 'Mile End', lat: 45.51, lng: -73.60 },
-    'H4B': { name: 'Notre-Dame-de-Grâce', lat: 45.46, lng: -73.62 },
-    'H4C': { name: 'Saint-Henri', lat: 45.47, lng: -73.59 },
-    'H4E': { name: 'Ville-Émard', lat: 45.46, lng: -73.60 },
-    'H4G': { name: 'Saint-Henri', lat: 45.46, lng: -73.58 },
-    'H4H': { name: 'Little Burgundy', lat: 45.48, lng: -73.59 },
-    'H4J': { name: 'Park Extension', lat: 45.52, lng: -73.64 },
-    'H4K': { name: 'Park Extension', lat: 45.52, lng: -73.64 },
-    'H4L': { name: 'Park Extension', lat: 45.53, lng: -73.64 },
-    'H4M': { name: 'Ahuntsic', lat: 45.53, lng: -73.67 },
-    'H4N': { name: 'Ahuntsic', lat: 45.52, lng: -73.68 },
-    'H4P': { name: 'Côte-des-Neiges', lat: 45.50, lng: -73.64 },
-    'H4R': { name: 'Saint-Laurent', lat: 45.51, lng: -73.68 },
-    'H4S': { name: 'Saint-Laurent', lat: 45.50, lng: -73.70 },
-    'H4T': { name: 'Saint-Laurent', lat: 45.49, lng: -73.71 },
-    'H4V': { name: 'Côte-Saint-Luc', lat: 45.47, lng: -73.66 },
-    'H4W': { name: 'Côte-Saint-Luc', lat: 45.46, lng: -73.66 },
-    'H4X': { name: 'Hampstead', lat: 45.48, lng: -73.63 },
-    'H4Y': { name: 'Montreal West', lat: 45.45, lng: -73.65 },
-    'H4Z': { name: 'Saint-Laurent', lat: 45.48, lng: -73.72 },
-    'H5A': { name: 'Downtown', lat: 45.50, lng: -73.56 },
-    'H5B': { name: 'Old Montreal', lat: 45.50, lng: -73.55 }
-};
+// ========================================
+// INITIALIZATION
+// ========================================
+document.addEventListener('DOMContentLoaded', async () => {
+  await loadProjects();
+  initializeFilters();
+  initializeEventListeners();
+  loadSavedPreferences();
+  renderAll();
+  animateStats();
+  fetchTrendsData();
+  fetchSeasonalData();
+  fetchMaterialCosts();
+});
 
-// Calculate distance between two coordinates in km
-function calculateDistance(lat1, lng1, lat2, lng2) {
-    const R = 6371; // Earth's radius in km
-    const dLat = (lat2 - lat1) * Math.PI / 180;
-    const dLng = (lng2 - lng1) * Math.PI / 180;
-    const a = Math.sin(dLat/2) * Math.sin(dLat/2) +
-              Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) *
-              Math.sin(dLng/2) * Math.sin(dLng/2);
-    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
-    return R * c;
-}
-
-// Load project data
-async function loadData() {
-    try {
-        const response = await fetch('data/projects.json');
-        projects = await response.json();
-        
-        // Enhance projects with market data simulation
-        projects = projects.map(project => {
-            const searchResults = simulateMarketSearch(project);
-            return {
-                ...project,
-                marketData: {
-                    similarProducts: searchResults,
-                    avgMarketPrice: calculateAvgPrice(searchResults, project.sellingPrice),
-                    demandScore: calculateDemandScore(project),
-                    competitionLevel: 'medium',
-                    lastUpdated: new Date().toISOString()
-                },
-                nearbyPostalCodes: generateNearbyAreas(project.location?.defaultPostalCode || 'H3A 0G4')
-            };
-        });
-        
-        filteredProjects = [...projects];
-        
-        // Initialize UI
-        initializeFilters();
-        renderProjects();
-        updateStats();
-        
-    } catch (error) {
-        console.error('Error loading data:', error);
-        elements.container.innerHTML = `
-            <div class="empty-state">
-                <i class="fas fa-exclamation-circle"></i>
-                <h3>Error Loading Projects</h3>
-                <p>Please ensure data/projects.json exists</p>
-            </div>
-        `;
-    }
-}
-
-// Simulate market search for similar products
-function simulateMarketSearch(project) {
-    const platforms = ['Etsy', 'Facebook Marketplace', 'Kijiji', 'Amazon', 'Wayfair'];
-    const results = [];
-    const basePrice = project.sellingPrice;
-    
-    // Generate 3-5 simulated listings
-    const numResults = 3 + Math.floor(Math.random() * 3);
-    
-    for (let i = 0; i < numResults; i++) {
-        const platform = platforms[Math.floor(Math.random() * platforms.length)];
-        const priceVariation = (Math.random() * 0.4) - 0.2; // ±20%
-        const price = Math.round(basePrice * (1 + priceVariation));
-        
-        results.push({
-            platform,
-            title: `${project.title} - ${project.category}`,
-            price: price,
-            url: `https://www.${platform.toLowerCase().replace(' ', '')}.com/search?q=${encodeURIComponent(project.title)}`,
-            estimatedDelivery: `${3 + Math.floor(Math.random() * 7)} days`,
-            sellerLocation: ['Montreal', 'Quebec', 'Toronto', 'Vancouver'][Math.floor(Math.random() * 4)],
-            rating: (3.5 + Math.random() * 1.5).toFixed(1)
-        });
-    }
-    
-    return results.sort((a, b) => a.price - b.price);
-}
-
-// Calculate average market price
-function calculateAvgPrice(listings, fallbackPrice) {
-    if (listings.length === 0) return fallbackPrice;
-    let sum = 0;
-    for (const item of listings) {
-        sum = sum + item.price;
-    }
-    return Math.round(sum / listings.length);
-}
-
-// Calculate demand score (0-100)
-function calculateDemandScore(project) {
-    let score = 50; // Base score
-    
-    // Category boost
-    const popularCategories = ['Planter Boxes', 'Raised Beds', 'Tables', 'Benches'];
-    if (popularCategories.includes(project.category)) score += 15;
-    
-    // Profit margin boost
-    if (project.profitMargin > 60) score += 10;
-    if (project.profitMargin > 80) score += 10;
-    
-    // Time efficiency boost
-    if (project.estimatedHours <= 4) score += 10;
-    
-    // Seasonal adjustments
-    const month = new Date().getMonth();
-    if (project.category.includes('Planter') || project.category.includes('Garden')) {
-        if (month >= 2 && month <= 8) score += 15; // Spring/Summer
-    }
-    
-    // Difficulty penalty (easier = higher demand)
-    if (project.difficulty === 'Easy') score += 10;
-    if (project.difficulty === 'Expert') score -= 10;
-    
-    return Math.min(100, Math.max(0, score));
-}
-
-// Generate nearby postal codes
-function generateNearbyAreas(centerPostalCode) {
-    const nearby = [];
-    const cleanCode = centerPostalCode.replace(/\s/g, '').substring(0, 3);
-    const centerData = montrealAreas[cleanCode] || montrealAreas['H3A'];
-    
-    // Find all areas within reasonable distance
-    for (const [code, data] of Object.entries(montrealAreas)) {
-        const distance = calculateDistance(
-            centerData.lat, centerData.lng,
-            data.lat, data.lng
-        );
-        
-        if (distance <= 30) { // Within 30km
-            nearby.push({
-                code,
-                name: data.name,
-                distance: Math.round(distance * 10) / 10
-            });
-        }
-    }
-    
-    return nearby.sort((a, b) => a.distance - b.distance);
-}
-
-// Initialize filter options
-function initializeFilters() {
-    // Extract unique categories and tools
-    const categories = [...new Set(projects.map(p => p.category))].sort();
-    const allTools = projects.flatMap(p => p.tools || []);
-    const tools = [...new Set(allTools)].sort().slice(0, 15); // Top 15 tools
-    
-    // Render category filters
-    elements.categoryFilters.innerHTML = categories.map(cat => `
-        <label class="checkbox">
-            <input type="checkbox" value="${cat}" checked data-filter="category">
-            <span class="checkmark"></span>
-            <span>${cat}</span>
-        </label>
-    `).join('');
-    
-    // Render tool filters
-    elements.toolsFilters.innerHTML = tools.map(tool => `
-        <label class="checkbox">
-            <input type="checkbox" value="${tool}" checked data-filter="tool">
-            <span class="checkmark"></span>
-            <span>${tool}</span>
-        </label>
-    `).join('');
-    
-    // Attach event listeners
-    attachFilterListeners();
-}
-
-// Attach filter event listeners
-function attachFilterListeners() {
-    // Checkboxes
-    document.querySelectorAll('input[type="checkbox"][data-filter]').forEach(checkbox => {
-        checkbox.addEventListener('change', applyFilters);
-    });
-    
-    // Difficulty filters
-    document.querySelectorAll('#difficulty-filters input').forEach(checkbox => {
-        checkbox.addEventListener('change', applyFilters);
-    });
-    
-    // Profit range filters
-    document.querySelectorAll('#profit-filters input').forEach(checkbox => {
-        checkbox.addEventListener('change', applyFilters);
-    });
-    
-    // Search
-    elements.searchInput.addEventListener('input', debounce(applyFilters, 300));
-    
-    // Sort
-    elements.sortSelect.addEventListener('change', () => {
-        applySort();
-        renderProjects();
-    });
-    
-    // Hours range
-    elements.minHours.addEventListener('input', debounce(applyFilters, 300));
-    elements.maxHours.addEventListener('input', debounce(applyFilters, 300));
-    
-    // Radius slider
-    elements.radius.addEventListener('input', (e) => {
-        elements.radiusValue.textContent = e.target.value;
-    });
-    
-    // Clear filters
-    elements.clearFilters.addEventListener('click', () => {
-        document.querySelectorAll('input[type="checkbox"]').forEach(cb => {
-            cb.checked = true;
-        });
-        elements.searchInput.value = '';
-        elements.minHours.value = '';
-        elements.maxHours.value = '';
-        elements.postalCode.value = '';
-        elements.radius.value = 25;
-        elements.radiusValue.textContent = '25';
-        applyFilters();
-    });
-    
-    // View toggle
-    document.querySelectorAll('.nav-btn[data-view]').forEach(btn => {
-        btn.addEventListener('click', () => {
-            document.querySelectorAll('.nav-btn[data-view]').forEach(b => {
-                b.classList.remove('active');
-            });
-            btn.classList.add('active');
-            currentView = btn.dataset.view;
-            elements.container.classList.toggle('list-view', currentView === 'list');
-            renderProjects();
-        });
-    });
-}
-
-// Debounce helper
-function debounce(func, wait) {
-    let timeout;
-    return function executedFunction(...args) {
-        const later = () => {
-            clearTimeout(timeout);
-            func(...args);
-        };
-        clearTimeout(timeout);
-        timeout = setTimeout(later, wait);
-    };
-}
-
-// Apply all filters
-function applyFilters() {
-    // Get filter values
-    const selectedCategories = [...document.querySelectorAll('#category-filters input:checked')]
-        .map(cb => cb.value);
-    const selectedDifficulties = [...document.querySelectorAll('#difficulty-filters input:checked')]
-        .map(cb => cb.value);
-    const selectedProfits = [...document.querySelectorAll('#profit-filters input:checked')]
-        .map(cb => cb.value);
-    const selectedTools = [...document.querySelectorAll('#tools-filters input:checked')]
-        .map(cb => cb.value);
-    const searchTerm = elements.searchInput.value.toLowerCase();
-    const minHours = parseInt(elements.minHours.value) || 0;
-    const maxHours = parseInt(elements.maxHours.value) || Infinity;
-    const postalCode = elements.postalCode.value.trim().toUpperCase();
-    const radiusKm = parseInt(elements.radius.value) || 25;
-    
-    // Filter projects
-    filteredProjects = projects.filter(project => {
-        // Category filter
-        if (!selectedCategories.includes(project.category)) return false;
-        
-        // Difficulty filter
-        if (!selectedDifficulties.includes(project.difficulty)) return false;
-        
-        // Profit range filter
-        const profitMin = project.profitCategory.match(/\$(\d+)/)?.[1] || '0';
-        const profitMax = project.profitCategory.match(/-\$(\d+)/)?.[1] || project.profitCategory.match(/\$(\d+)\+/)?.[1] || '9999';
-        
-        let profitMatches = false;
-        for (const range of selectedProfits) {
-            if (range === '$50-$100' && project.profit >= 50 && project.profit <= 100) profitMatches = true;
-            if (range === '$100-$200' && project.profit > 100 && project.profit <= 200) profitMatches = true;
-            if (range === '$200-$500' && project.profit > 200 && project.profit <= 500) profitMatches = true;
-            if (range === '$500+' && project.profit > 500) profitMatches = true;
-        }
-        if (!profitMatches) return false;
-        
-        // Tool filter
-        const projectTools = project.tools || [];
-        const hasSelectedTool = selectedTools.some(tool => 
-            projectTools.some(pt => pt.toLowerCase().includes(tool.toLowerCase()))
-        );
-        if (!hasSelectedTool && projectTools.length > 0) return false;
-        
-        // Search filter
-        if (searchTerm) {
-            const searchableText = `${project.title} ${project.source} ${project.category} ${project.tools?.join(' ') || ''}`.toLowerCase();
-            if (!searchableText.includes(searchTerm)) return false;
-        }
-        
-        // Hours filter
-        if (project.estimatedHours < minHours || project.estimatedHours > maxHours) return false;
-        
-        // Location filter
-        if (postalCode) {
-            const cleanPostal = postalCode.replace(/\s/g, '');
-            const cleanCenter = (project.location?.defaultPostalCode || 'H3A0G4').replace(/\s/g, '');
-            
-            // Simple distance check based on nearby postal codes
-            const nearby = project.nearbyPostalCodes || [];
-            const nearbyMatch = nearby.some(area => {
-                const areaCode = area.code + (cleanPostal.length > 3 ? ' ' : '');
-                const distance = area.distance || 0;
-                return areaCode.startsWith(cleanPostal.substring(0, 3)) && distance <= radiusKm;
-            });
-            
-            if (!nearbyMatch) return false;
-        }
-        
-        return true;
-    });
-    
-    // Apply sort
-    applySort();
-    
-    // Update UI
-    renderProjects();
+// ========================================
+// DATA LOADING
+// ========================================
+async function loadProjects() {
+  try {
+    const response = await fetch('data/projects.json');
+    const data = await response.json();
+    state.projects = data.map((project, index) => ({
+      ...project,
+      id: project.id || `proj_${index}`,
+      profit: project.profit || (project.sellingPrice - project.materialCost) || 0,
+      roi: project.profitMargin || calculateROI(project),
+      hourlyRate: project.profit && project.estimatedHours 
+        ? Math.round(project.profit / project.estimatedHours) 
+        : 0
+    }));
+    state.filteredProjects = [...state.projects];
     updateStats();
-    updateActiveFilters({
-        categories: selectedCategories,
-        difficulties: selectedDifficulties,
-        profits: selectedProfits,
-        tools: selectedTools,
-        search: searchTerm,
-        hours: minHours > 0 || maxHours < Infinity ? { min: minHours, max: maxHours } : null,
-        location: postalCode ? { postalCode, radius: radiusKm } : null
+  } catch (error) {
+    console.error('Failed to load projects:', error);
+    showError('Failed to load projects. Please refresh the page.');
+  }
+}
+
+function calculateROI(project) {
+  if (!project.materialCost || project.materialCost === 0) return 0;
+  const profit = project.profit || (project.sellingPrice - project.materialCost) || 0;
+  return Math.round((profit / project.materialCost) * 100);
+}
+
+// ========================================
+// FILTER INITIALIZATION
+// ========================================
+function initializeFilters() {
+  // Populate category filters
+  const categories = [...new Set(state.projects.map(p => p.category))].sort();
+  state.filters.categories = categories;
+  
+  elements.categoryFilters.innerHTML = categories.map(cat => `
+    <label class="checkbox">
+      <input type="checkbox" value="${cat}" checked data-filter="category">
+      <span class="checkmark"></span>
+      <span>${cat}</span>
+    </label>
+  `).join('');
+  
+  // Collect all unique tools
+  const allTools = new Set();
+  state.projects.forEach(p => {
+    if (p.tools) {
+      p.tools.forEach(tool => allTools.add(tool));
+    }
+  });
+  
+  const tools = [...allTools].sort();
+  elements.toolsFilters.innerHTML = tools.map(tool => `
+    <label class="checkbox">
+      <input type="checkbox" value="${tool}" data-filter="tool">
+      <span class="checkmark"></span>
+      <span>${tool}</span>
+    </label>
+  `).join('');
+}
+
+// ========================================
+// EVENT LISTENERS
+// ========================================
+function initializeEventListeners() {
+  // Mobile menu
+  elements.mobileMenuBtn.addEventListener('click', toggleSidebar);
+  elements.sidebarCloseBtn.addEventListener('click', closeSidebar);
+  
+  // Dark mode
+  elements.darkModeToggle.addEventListener('click', toggleDarkMode);
+  
+  // Filters
+  elements.clearFilters.addEventListener('click', clearAllFilters);
+  elements.searchInput.addEventListener('input', debounce(handleSearch, 300));
+  
+  // Category filters
+  elements.categoryFilters.addEventListener('change', handleCategoryFilter);
+  
+  // Difficulty filters
+  document.getElementById('difficulty-filters').addEventListener('change', handleDifficultyFilter);
+  
+  // Profit range filters
+  document.getElementById('profit-filters').addEventListener('change', handleProfitFilter);
+  
+  // Time filters
+  elements.minHours.addEventListener('input', debounce(handleTimeFilter, 300));
+  elements.maxHours.addEventListener('input', debounce(handleTimeFilter, 300));
+  
+  // Tool filters
+  elements.toolsFilters.addEventListener('change', handleToolFilter);
+  
+  // Location
+  elements.radius.addEventListener('input', (e) => {
+    elements.radiusValue.textContent = e.target.value;
+  });
+  elements.applyLocation.addEventListener('click', handleLocationApply);
+  
+  // Sort
+  elements.sortSelect.addEventListener('change', handleSort);
+  
+  // View toggle
+  elements.navButtons.forEach(btn => {
+    btn.addEventListener('click', () => handleViewChange(btn.dataset.view));
+  });
+  
+  // Filter toggles (collapsible sections)
+  elements.filterToggles.forEach(toggle => {
+    toggle.addEventListener('click', () => toggleFilterSection(toggle));
+  });
+  
+  // Export
+  elements.exportBtn.addEventListener('click', () => openModal('export-modal'));
+  elements.exportCsv.addEventListener('click', exportCSV);
+  elements.exportJson.addEventListener('click', exportJSON);
+  elements.exportPrint.addEventListener('click', exportPrint);
+  elements.exportCopyLink.addEventListener('click', copyShareableLink);
+  
+  // Calculator
+  elements.calcCalculate.addEventListener('click', calculateTimeToProfit);
+  
+  // Modal close buttons
+  elements.closePdfModal.addEventListener('click', () => closeModal('pdf-modal'));
+  elements.closeDetailModal.addEventListener('click', () => closeModal('detail-modal'));
+  elements.closeCompareModal.addEventListener('click', () => closeModal('compare-modal'));
+  elements.closeExportModal.addEventListener('click', () => closeModal('export-modal'));
+  
+  // Close modals on overlay click
+  document.querySelectorAll('.modal-overlay').forEach(overlay => {
+    overlay.addEventListener('click', (e) => {
+      e.target.closest('.modal').classList.remove('active');
     });
-}
-
-// Apply sorting
-function applySort() {
-    const sortValue = elements.sortSelect.value;
-    
-    switch (sortValue) {
-        case 'profit-desc':
-            filteredProjects.sort((a, b) => b.profit - a.profit);
-            break;
-        case 'profit-asc':
-            filteredProjects.sort((a, b) => a.profit - b.profit);
-            break;
-        case 'hours-asc':
-            filteredProjects.sort((a, b) => a.estimatedHours - b.estimatedHours);
-            break;
-        case 'hours-desc':
-            filteredProjects.sort((a, b) => b.estimatedHours - a.estimatedHours);
-            break;
-        case 'roi-desc':
-            filteredProjects.sort((a, b) => b.profitMargin - a.profitMargin);
-            break;
-        case 'difficulty': {
-            const difficultyOrder = { 'Easy': 1, 'Intermediate': 2, 'Expert': 3 };
-            filteredProjects.sort((a, b) => difficultyOrder[a.difficulty] - difficultyOrder[b.difficulty]);
-            break;
-        }
-    }
-}
-
-// Update active filters display
-function updateActiveFilters(filters) {
-    const activeTags = [];
-    
-    if (filters.search) {
-        activeTags.push({ label: `Search: "${filters.search}"`, type: 'search' });
-    }
-    
-    if (filters.location) {
-        activeTags.push({ 
-            label: `📍 ${filters.location.postalCode} (${filters.location.radius}km)`, 
-            type: 'location' 
-        });
-    }
-    
-    if (filters.hours) {
-        activeTags.push({ 
-            label: `⏱ ${filters.hours.min}-${filters.hours.max === Infinity ? '∞' : filters.hours.max} hrs`, 
-            type: 'hours' 
-        });
-    }
-    
-    elements.activeFilters.innerHTML = activeTags.map(tag => `
-        <span class="filter-tag">
-            ${tag.label}
-            <i class="fas fa-times" onclick="clearFilter('${tag.type}')"></i>
-        </span>
-    `).join('');
-}
-
-// Clear specific filter
-function clearFilter(type) {
-    switch (type) {
-        case 'search':
-            elements.searchInput.value = '';
-            break;
-        case 'location':
-            elements.postalCode.value = '';
-            break;
-        case 'hours':
-            elements.minHours.value = '';
-            elements.maxHours.value = '';
-            break;
-    }
-    applyFilters();
-}
-
-// Update statistics
-function updateStats() {
-    const total = filteredProjects.length;
-    const totalProfit = filteredProjects.reduce((sum, p) => sum + p.profit, 0);
-    const totalHours = filteredProjects.reduce((sum, p) => sum + p.estimatedHours, 0);
-    const avgMargin = total > 0 
-        ? filteredProjects.reduce((sum, p) => sum + p.profitMargin, 0) / total 
-        : 0;
-    
-    elements.totalProjects.textContent = total;
-    elements.totalProfit.textContent = `$${totalProfit.toLocaleString()}`;
-    elements.totalHours.textContent = totalHours;
-    elements.avgRoi.textContent = `${Math.round(avgMargin)}%`;
-}
-
-// Render projects
-function renderProjects() {
-    if (filteredProjects.length === 0) {
-        elements.container.innerHTML = `
-            <div class="empty-state">
-                <i class="fas fa-search"></i>
-                <h3>No projects match your filters</h3>
-                <p>Try adjusting your search criteria</p>
-            </div>
-        `;
-        return;
-    }
-    
-    elements.container.innerHTML = filteredProjects.map(project => createProjectCard(project)).join('');
-    
-    // Attach card event listeners
-    attachCardListeners();
-}
-
-// Create project card HTML
-function createProjectCard(project) {
-    const isSelected = compareList.includes(project.id);
-    
-    return `
-        <div class="project-card" data-id="${project.id}">
-            <label class="compare-checkbox" onclick="event.stopPropagation()">
-                <input type="checkbox" ${isSelected ? 'checked' : ''} 
-                       onchange="toggleCompare('${project.id}')">
-                <span class="checkmark"></span>
-            </label>
-            
-            <div class="project-card-header">
-                <div>
-                    <span class="project-category">${project.category}</span>
-                    <h3 class="project-title">${project.title}</h3>
-                </div>
-                <span class="difficulty-badge ${project.difficulty.toLowerCase()}">
-                    ${project.difficulty}
-                </span>
-            </div>
-            
-            <div class="project-card-body">
-                <div class="project-meta">
-                    <span class="meta-item profit">
-                        <i class="fas fa-dollar-sign"></i>
-                        $${project.profit} profit
-                    </span>
-                    <span class="meta-item">
-                        <i class="fas fa-clock"></i>
-                        ${project.estimatedHours} hrs
-                    </span>
-                    <span class="meta-item">
-                        <i class="fas fa-tag"></i>
-                        $${project.sellingPrice} selling
-                    </span>
-                    <span class="meta-item">
-                        <i class="fas fa-chart-line"></i>
-                        ${project.profitMargin}% ROI
-                    </span>
-                </div>
-                
-                <div class="project-tools">
-                    ${(project.tools || []).slice(0, 4).map(tool => 
-                        `<span class="tool-tag">${tool}</span>`
-                    ).join('')}
-                    ${(project.tools || []).length > 4 ? `<span class="tool-tag">+${project.tools.length - 4}</span>` : ''}
-                </div>
-                
-                ${project.marketData?.demandScore > 70 ? `
-                    <div class="meta-item" style="margin-top: 0.75rem; color: var(--secondary-color);">
-                        <i class="fas fa-fire"></i>
-                        High Demand (${project.marketData.demandScore}/100)
-                    </div>
-                ` : ''}
-            </div>
-            
-            <div class="project-card-footer">
-                <button class="card-btn" onclick="event.stopPropagation(); showDetails('${project.id}')">
-                    <i class="fas fa-info-circle"></i> Details
-                </button>
-                <button class="card-btn primary" onclick="event.stopPropagation(); viewPdf('${project.id}')">
-                    <i class="fas fa-file-pdf"></i> View PDF
-                </button>
-            </div>
-        </div>
-    `;
-}
-
-// Attach card click listeners
-function attachCardListeners() {
-    document.querySelectorAll('.project-card').forEach(card => {
-        card.addEventListener('click', (e) => {
-            if (!e.target.closest('.card-btn') && !e.target.closest('.compare-checkbox')) {
-                const id = card.dataset.id;
-                showDetails(id);
-            }
-        });
-    });
-}
-
-// Toggle compare selection
-function toggleCompare(projectId) {
-    const index = compareList.indexOf(projectId);
-    if (index > -1) {
-        compareList.splice(index, 1);
-    } else {
-        if (compareList.length < 4) {
-            compareList.push(projectId);
-        } else {
-            alert('You can compare up to 4 projects at a time');
-            // Uncheck the box
-            const checkbox = document.querySelector(`[data-id="${projectId}"] .compare-checkbox input`);
-            if (checkbox) checkbox.checked = false;
-            return;
-        }
-    }
-    
-    updateCompareBar();
-}
-
-// Update compare bar visibility
-function updateCompareBar() {
-    let compareBar = document.getElementById('compare-bar');
-    
-    if (!compareBar) {
-        compareBar = document.createElement('div');
-        compareBar.id = 'compare-bar';
-        compareBar.className = 'compare-bar hidden';
-        compareBar.innerHTML = `
-            <span class="compare-count">0 selected</span>
-            <div class="compare-actions">
-                <button class="card-btn" onclick="clearCompare()">Clear</button>
-                <button class="card-btn primary" onclick="showCompare()">Compare</button>
-            </div>
-        `;
-        document.body.appendChild(compareBar);
-    }
-    
-    const countEl = compareBar.querySelector('.compare-count');
-    countEl.textContent = `${compareList.length} selected`;
-    
-    if (compareList.length > 0) {
-        compareBar.classList.remove('hidden');
-    } else {
-        compareBar.classList.add('hidden');
-    }
-}
-
-// Clear compare list
-function clearCompare() {
-    compareList = [];
-    document.querySelectorAll('.compare-checkbox input').forEach(cb => {
-        cb.checked = false;
-    });
-    updateCompareBar();
-}
-
-// Show compare modal
-function showCompare() {
-    const projectsToCompare = projects.filter(p => compareList.includes(p.id));
-    
-    elements.compareContent.innerHTML = `
-        <div class="compare-grid">
-            ${projectsToCompare.map(project => `
-                <div class="compare-column">
-                    <div class="compare-header">
-                        <h3>${project.title}</h3>
-                    </div>
-                    <div class="compare-content">
-                        <div class="compare-row">
-                            <span>Category</span>
-                            <strong>${project.category}</strong>
-                        </div>
-                        <div class="compare-row">
-                            <span>Difficulty</span>
-                            <span class="difficulty-badge ${project.difficulty.toLowerCase()}">${project.difficulty}</span>
-                        </div>
-                        <div class="compare-row">
-                            <span>Time</span>
-                            <strong>${project.estimatedHours} hrs</strong>
-                        </div>
-                        <div class="compare-row">
-                            <span>Material Cost</span>
-                            <strong>$${project.materialCost}</strong>
-                        </div>
-                        <div class="compare-row">
-                            <span>Selling Price</span>
-                            <strong style="color: var(--secondary-color);">$${project.sellingPrice}</strong>
-                        </div>
-                        <div class="compare-row">
-                            <span>Profit</span>
-                            <strong style="color: var(--secondary-color);">$${project.profit}</strong>
-                        </div>
-                        <div class="compare-row">
-                            <span>ROI</span>
-                            <strong>${project.profitMargin}%</strong>
-                        </div>
-                        <div class="compare-row">
-                            <span>Demand Score</span>
-                            <strong>${project.marketData?.demandScore || 'N/A'}/100</strong>
-                        </div>
-                        <div class="compare-row">
-                            <span>Market Price</span>
-                            <strong>$${project.marketData?.avgMarketPrice || project.sellingPrice}</strong>
-                        </div>
-                    </div>
-                </div>
-            `).join('')}
-        </div>
-        
-        <div style="margin-top: 2rem; padding: 1.5rem; background: var(--bg-primary); border-radius: var(--radius-lg);">
-            <h3 style="margin-bottom: 1rem;">Recommendation</h3>
-            <p style="color: var(--text-secondary);">
-                ${generateRecommendation(projectsToCompare)}
-            </p>
-        </div>
-    `;
-    
-    elements.compareModal.classList.add('active');
-}
-
-// Generate comparison recommendation
-function generateRecommendation(projects) {
-    if (projects.length === 0) return 'Select projects to compare';
-    
-    // Calculate metrics
-    const bestProfit = projects.reduce((best, p) => p.profit > best.profit ? p : best, projects[0]);
-    const bestRoi = projects.reduce((best, p) => p.profitMargin > best.profitMargin ? p : best, projects[0]);
-    const quickest = projects.reduce((best, p) => p.estimatedHours < best.estimatedHours ? p : best, projects[0]);
-    const highestDemand = projects.reduce((best, p) => 
-        (p.marketData?.demandScore || 0) > (best.marketData?.demandScore || 0) ? p : best, projects[0]);
-    
-    return `
-        Based on your selection:
-        <br><br>
-        • <strong>Best Profit:</strong> ${bestProfit.title} ($${bestProfit.profit})
-        <br>
-        • <strong>Best ROI:</strong> ${bestRoi.title} (${bestRoi.profitMargin}%)
-        <br>
-        • <strong>Quickest:</strong> ${quickest.title} (${quickest.estimatedHours} hours)
-        <br>
-        • <strong>Highest Demand:</strong> ${highestDemand.title} (${highestDemand.marketData?.demandScore || 'N/A'}/100)
-        <br><br>
-        <strong>Suggested Priority:</strong> Consider ${quickest.title} for quick wins while building up to ${bestProfit.title} for maximum earnings.
-    `;
-}
-
-// Show project details
-function showDetails(projectId) {
-    const project = projects.find(p => p.id === projectId);
-    if (!project) return;
-    
-    elements.detailTitle.textContent = project.title;
-    
-    elements.detailContent.innerHTML = `
-        <div class="detail-grid">
-            <div class="detail-section">
-                <h3><i class="fas fa-info-circle"></i> Project Overview</h3>
-                <div class="detail-row">
-                    <span class="detail-label">Source</span>
-                    <span class="detail-value">${project.source}</span>
-                </div>
-                <div class="detail-row">
-                    <span class="detail-label">Category</span>
-                    <span class="detail-value">${project.category}</span>
-                </div>
-                <div class="detail-row">
-                    <span class="detail-label">Difficulty</span>
-                    <span class="detail-value">
-                        <span class="difficulty-badge ${project.difficulty.toLowerCase()}">${project.difficulty}</span>
-                    </span>
-                </div>
-                <div class="detail-row">
-                    <span class="detail-label">Pages in Plan</span>
-                    <span class="detail-value">${project.pageCount}</span>
-                </div>
-                ${project.hasCutList ? `
-                    <div class="detail-row">
-                        <span class="detail-label">Cut List</span>
-                        <span class="detail-value"><i class="fas fa-check" style="color: var(--secondary-color);"></i> Included</span>
-                    </div>
-                ` : ''}
-            </div>
-            
-            <div class="detail-section">
-                <h3><i class="fas fa-dollar-sign"></i> Financial Breakdown</h3>
-                <div class="detail-row">
-                    <span class="detail-label">Material Cost</span>
-                    <span class="detail-value">$${project.materialCost}</span>
-                </div>
-                <div class="detail-row">
-                    <span class="detail-label">Selling Price</span>
-                    <span class="detail-value">$${project.sellingPrice}</span>
-                </div>
-                <div class="detail-row">
-                    <span class="detail-label">Profit</span>
-                    <span class="detail-value profit">$${project.profit}</span>
-                </div>
-                <div class="detail-row">
-                    <span class="detail-label">ROI</span>
-                    <span class="detail-value profit">${project.profitMargin}%</span>
-                </div>
-                <div class="detail-row">
-                    <span class="detail-label">Est. Market Price</span>
-                    <span class="detail-value">$${project.marketData?.avgMarketPrice || project.sellingPrice}</span>
-                </div>
-            </div>
-            
-            <div class="detail-section">
-                <h3><i class="fas fa-clock"></i> Time Requirements</h3>
-                <div class="detail-row">
-                    <span class="detail-label">Total Hours</span>
-                    <span class="detail-value">${project.estimatedHours} hours</span>
-                </div>
-                <div class="detail-row">
-                    <span class="detail-label">Est. Days (4hr/day)</span>
-                    <span class="detail-value">${project.estimatedDays} days</span>
-                </div>
-                <div class="detail-row">
-                    <span class="detail-label">Hourly Rate</span>
-                    <span class="detail-value">$${Math.round(project.profit / project.estimatedHours)}/hr</span>
-                </div>
-            </div>
-            
-            <div class="detail-section">
-                <h3><i class="fas fa-tools"></i> Required Tools</h3>
-                <div class="project-tools" style="padding: 1rem 0;">
-                    ${(project.tools || []).map(tool => `<span class="tool-tag" style="font-size: 0.875rem; padding: 0.25rem 0.5rem;">${tool}</span>`).join('')}
-                </div>
-            </div>
-            
-            <div class="detail-section full-width">
-                <h3><i class="fas fa-chart-line"></i> Market Analysis (Montreal Area)</h3>
-                <div class="detail-row">
-                    <span class="detail-label">Demand Score</span>
-                    <span class="detail-value">
-                        ${project.marketData?.demandScore || 'N/A'}/100
-                        ${project.marketData?.demandScore > 70 ? ' <i class="fas fa-fire" style="color: var(--danger-color);"></i>' : ''}
-                    </span>
-                </div>
-                <div class="detail-row">
-                    <span class="detail-label">Competition Level</span>
-                    <span class="detail-value">${project.marketData?.competitionLevel || 'Medium'}</span>
-                </div>
-                <div class="detail-row">
-                    <span class="detail-label">Nearby Areas</span>
-                    <span class="detail-value">${(project.nearbyPostalCodes || []).length} within radius</span>
-                </div>
-                
-                <h4 style="margin-top: 1.5rem; margin-bottom: 0.75rem; font-size: 0.875rem; color: var(--text-secondary);">
-                    Similar Products Online
-                </h4>
-                <div class="market-listings">
-                    ${(project.marketData?.similarProducts || []).slice(0, 3).map(product => `
-                        <div class="market-item">
-                            <div>
-                                <div class="market-item-title">${product.title}</div>
-                                <div class="market-item-platform">${product.platform} • ${product.sellerLocation} • ★${product.rating}</div>
-                            </div>
-                            <div style="text-align: right;">
-                                <div class="market-item-price">$${product.price}</div>
-                                <div style="font-size: 0.75rem; color: var(--text-muted);">${product.estimatedDelivery}</div>
-                            </div>
-                        </div>
-                    `).join('')}
-                </div>
-                
-                <div style="margin-top: 1rem;">
-                    <a href="https://www.google.com/search?q=${encodeURIComponent(project.title + ' for sale Montreal')}" 
-                       target="_blank" 
-                       class="card-btn primary" 
-                       style="display: inline-flex; text-decoration: none;">
-                        <i class="fas fa-external-link-alt"></i> Search Live Listings
-                    </a>
-                </div>
-            </div>
-        </div>
-        
-        <div style="margin-top: 2rem; display: flex; gap: 1rem;">
-            <button class="card-btn primary" onclick="viewPdf('${project.id}')" style="flex: 1; padding: 0.75rem;">
-                <i class="fas fa-file-pdf"></i> Open PDF Plan
-            </button>
-        </div>
-    `;
-    
-    elements.detailModal.classList.add('active');
-}
-
-// View PDF
-function viewPdf(projectId) {
-    const project = projects.find(p => p.id === projectId);
-    if (!project) return;
-    
-    // Calculate relative path from web-catalog to the PDF
-    const pdfPath = '../' + project.relativePath;
-    
-    elements.modalTitle.textContent = project.title;
-    elements.pdfViewer.src = pdfPath;
-    
-    elements.pdfModal.classList.add('active');
-}
-
-// Close modals
-document.getElementById('close-pdf-modal').addEventListener('click', () => {
-    elements.pdfModal.classList.remove('active');
-    elements.pdfViewer.src = '';
-});
-
-document.getElementById('close-detail-modal').addEventListener('click', () => {
-    elements.detailModal.classList.remove('active');
-});
-
-document.getElementById('close-compare-modal').addEventListener('click', () => {
-    elements.compareModal.classList.remove('active');
-});
-
-// Close on overlay click
-elements.pdfModal.addEventListener('click', (e) => {
-    if (e.target === elements.pdfModal || e.target.classList.contains('modal-overlay')) {
-        elements.pdfModal.classList.remove('active');
-        elements.pdfViewer.src = '';
-    }
-});
-
-elements.detailModal.addEventListener('click', (e) => {
-    if (e.target === elements.detailModal || e.target.classList.contains('modal-overlay')) {
-        elements.detailModal.classList.remove('active');
-    }
-});
-
-elements.compareModal.addEventListener('click', (e) => {
-    if (e.target === elements.compareModal || e.target.classList.contains('modal-overlay')) {
-        elements.compareModal.classList.remove('active');
-    }
-});
-
-// Close on Escape key
-document.addEventListener('keydown', (e) => {
+  });
+  
+  // Keyboard shortcuts
+  document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape') {
-        elements.pdfModal.classList.remove('active');
-        elements.detailModal.classList.remove('active');
-        elements.compareModal.classList.remove('active');
-        elements.pdfViewer.src = '';
+      document.querySelectorAll('.modal.active').forEach(modal => {
+        modal.classList.remove('active');
+      });
     }
-});
+  });
+}
 
-// Initialize on load
-document.addEventListener('DOMContentLoaded', loadData);
+// ========================================
+// FILTER HANDLERS
+// ========================================
+function handleCategoryFilter(e) {
+  const checkboxes = elements.categoryFilters.querySelectorAll('input[type="checkbox"]');
+  state.filters.categories = [...checkboxes]
+    .filter(cb => cb.checked)
+    .map(cb => cb.value);
+  applyFilters();
+}
 
-// Expose functions to window for onclick handlers
-window.toggleCompare = toggleCompare;
-window.showDetails = showDetails;
-window.viewPdf = viewPdf;
-window.clearCompare = clearCompare;
-window.showCompare = showCompare;
-window.clearFilter = clearFilter;
+function handleDifficultyFilter(e) {
+  const checkboxes = document.querySelectorAll('#difficulty-filters input[type="checkbox"]');
+  state.filters.difficulties = [...checkboxes]
+    .filter(cb => cb.checked)
+    .map(cb => cb.value);
+  applyFilters();
+}
+
+function handleProfitFilter(e) {
+  const checkboxes = document.querySelectorAll('#profit-filters input[type="checkbox"]');
+  state.filters.profitRanges = [...checkboxes]
+    .filter(cb => cb.checked)
+    .map(cb => cb.value);
+  applyFilters();
+}
+
+function handleTimeFilter() {
+  state.filters.minHours = elements.minHours.value ? parseInt(elements.minHours.value) : null;
+  state.filters.maxHours = elements.maxHours.value ? parseInt(elements.maxHours.value) : null;
+  applyFilters();
+}
+
+function handleToolFilter(e) {
+  const checkboxes = elements.toolsFilters.querySelectorAll('input[type="checkbox"]');
+  state.filters.tools = [...checkboxes]
+    .filter(cb => cb.checked)
+    .map(cb => cb.value);
+  applyFilters();
+}
+
+function handleSearch() {
+  state.filters.search = elements.searchInput.value.toLowerCase().trim();
+  applyFilters();
+}
+
+async function handleLocationApply() {
+  const postalCode = elements.postalCode.value.trim();
+  const radius = parseInt(elements.radius.value);
+  
+  if (!postalCode) {
+    showError('Please enter a postal code');
+    return;
+  }
+  
+  state.location = { postalCode, radius };
+  
+  // Update trending badge
+  document.getElementById('trending-location').textContent = `${postalCode} (${radius}km radius)`;
+  
+  // Fetch new trends data
+  await fetchTrendsData(postalCode, radius);
+  renderTrending();
+  renderHeatmap();
+}
+
+function handleSort() {
+  state.sort = elements.sortSelect.value;
+  sortProjects();
+  renderProjects();
+}
+
+function handleViewChange(view) {
+  state.view = view;
+  
+  // Update active button
+  elements.navButtons.forEach(btn => {
+    btn.classList.toggle('active', btn.dataset.view === view);
+  });
+  
+  // Update container class
+  elements.projectsContainer.classList.toggle('list-view', view === 'list');
+  
+  renderProjects();
+}
+
+function toggleFilterSection(toggle) {
+  const expanded = toggle.getAttribute('aria-expanded') === 'true';
+  toggle.setAttribute('aria-expanded', !expanded);
+  
+  const content = document.getElementById(toggle.getAttribute('aria-controls'));
+  content.classList.toggle('collapsed', expanded);
+}
+
+// ========================================
+// FILTER LOGIC
+// ========================================
+function applyFilters() {
+  state.filteredProjects = state.projects.filter(project => {
+    // Category filter
+    if (!state.filters.categories.includes(project.category)) return false;
+    
+    // Difficulty filter
+    if (!state.filters.difficulties.includes(project.difficulty)) return false;
+    
+    // Profit range filter
+    const profitRange = getProfitRange(project.profit);
+    if (!state.filters.profitRanges.includes(profitRange)) return false;
+    
+    // Time filter
+    if (state.filters.minHours && project.estimatedHours < state.filters.minHours) return false;
+    if (state.filters.maxHours && project.estimatedHours > state.filters.maxHours) return false;
+    
+    // Tools filter
+    if (state.filters.tools.length > 0) {
+      const hasTool = state.filters.tools.some(tool => 
+        project.tools && project.tools.includes(tool)
+      );
+      if (!hasTool) return false;
+    }
+    
+    // Search filter
+    if (state.filters.search) {
+      const searchTerms = state.filters.search.split(' ');
+      const projectText = `${project.title} ${project.category} ${project.source} ${project.description || ''}`.toLowerCase();
+      const matches = searchTerms.every(term => projectText.includes(term));
+      if (!matches) return false;
+    }
+    
+    return true;
+  });
+  
+  sortProjects();
+  renderProjects();
+  updateActiveFilters();
+  updateStats();
+}
+
+function getProfitRange(profit) {
+  if (!profit || profit < 100) return '$50-$100';
+  if (profit < 200) return '$100-$200';
+  if (profit < 500) return '$200-$500';
+  return '$500+';
+}
+
+function sortProjects() {
+  const [field, direction] = state.sort.split('-');
+  
+  state.filteredProjects.sort((a, b) => {
+    let valA, valB;
+    
+    switch (field) {
+      case 'profit':
+        valA = a.profit || 0;
+        valB = b.profit || 0;
+        break;
+      case 'hours':
+        valA = a.estimatedHours || 0;
+        valB = b.estimatedHours || 0;
+        break;
+      case 'roi':
+        valA = a.roi || 0;
+        valB = b.roi || 0;
+        break;
+      case 'demand':
+        valA = calculateDemandScore(a);
+        valB = calculateDemandScore(b);
+        break;
+      case 'difficulty':
+        const diffOrder = { 'Easy': 1, 'Intermediate': 2, 'Expert': 3 };
+        valA = diffOrder[a.difficulty] || 0;
+        valB = diffOrder[b.difficulty] || 0;
+        break;
+      default:
+        valA = a.profit || 0;
+        valB = b.profit || 0;
+    }
+    
+    if (direction === 'asc') return valA - valB;
+    return valB - valA;
+  });
+}
+
+function calculateDemandScore(project) {
+  if (state.trendsData && state.trendsData[project.category]) {
+    return state.trendsData[project.category].score || 50;
+  }
+  // Fallback: use profit margin as proxy for demand
+  return project.roi || 50;
+}
+
+function clearAllFilters() {
+  // Reset filter state
+  state.filters = {
+    categories: [...new Set(state.projects.map(p => p.category))],
+    difficulties: ['Easy', 'Intermediate', 'Expert'],
+    profitRanges: ['$50-$100', '$100-$200', '$200-$500', '$500+'],
+    minHours: null,
+    maxHours: null,
+    tools: [],
+    search: ''
+  };
+  
+  // Reset inputs
+  elements.searchInput.value = '';
+  elements.minHours.value = '';
+  elements.maxHours.value = '';
+  
+  // Reset checkboxes
+  document.querySelectorAll('.checkbox input[type="checkbox"]').forEach(cb => {
+    cb.checked = cb.dataset.filter !== 'tool';
+  });
+  
+  applyFilters();
+}
+
+function updateActiveFilters() {
+  const tags = [];
+  
+  // Add active filter tags
+  if (state.filters.search) {
+    tags.push({ type: 'search', label: `Search: "${state.filters.search}"` });
+  }
+  
+  if (state.filters.minHours || state.filters.maxHours) {
+    const min = state.filters.minHours || '0';
+    const max = state.filters.maxHours || '∞';
+    tags.push({ type: 'time', label: `Time: ${min}-${max} hrs` });
+  }
+  
+  if (state.filters.tools.length > 0) {
+    tags.push({ type: 'tools', label: `Tools: ${state.filters.tools.length} selected` });
+  }
+  
+  elements.activeFilters.innerHTML = tags.map(tag => `
+    <span class="filter-tag" data-type="${tag.type}">
+      ${tag.label}
+      <button onclick="removeFilter('${tag.type}')" aria-label="Remove filter">
+        <i class="fas fa-times"></i>
+      </button>
+    </span>
+  `).join('');
+}
+
+function removeFilter(type) {
+  switch (type) {
+    case 'search':
+      state.filters.search = '';
+      elements.searchInput.value = '';
+      break;
+    case 'time':
+      state.filters.minHours = null;
+      state.filters.maxHours = null;
+      elements.minHours.value = '';
+      elements.maxHours.value = '';
+      break;
+    case 'tools':
+      state.filters.tools = [];
+      elements.toolsFilters.querySelectorAll('input').forEach(cb => cb.checked = false);
+      break;
+  }
+  applyFilters();
+}
+
+// ========================================
+// RENDER FUNCTIONS
+// ========================================
+function renderAll() {
+  renderProjects();
+  renderTrending();
+  renderTopPicks();
+  renderHeatmap();
+  renderSeasonal();
+  renderMaterials();
+}
+
+function renderProjects() {
+  if (state.filteredProjects.length === 0) {
+    elements.projectsContainer.innerHTML = `
+      <div class="empty-state" style="grid-column: 1 / -1;">
+        <i class="fas fa-search"></i>
+        <h3>No projects found</h3>
+        <p>Try adjusting your filters to see more results</p>
+      </div>
+    `;
+    return;
+  }
+  
+  elements.projectsContainer.innerHTML = state.filteredProjects.map(project => `
+    <article class="project-card animate-fadeInUp" data-category="${project.category}" data-id="${project.id}">
+      <div class="project-header">
+        <span class="project-category">${project.category}</span>
+        <h3 class="project-title">${project.title}</h3>
+        <span class="project-source"><i class="fas fa-building"></i> ${project.source}</span>
+      </div>
+      <div class="project-body">
+        <div class="project-stats">
+          <div class="project-stat">
+            <span class="project-stat-label">Profit</span>
+            <span class="project-stat-value profit">$${project.profit || 0}</span>
+          </div>
+          <div class="project-stat">
+            <span class="project-stat-label">Time</span>
+            <span class="project-stat-value">${project.estimatedHours || 0} hrs</span>
+          </div>
+          <div class="project-stat">
+            <span class="project-stat-label">ROI</span>
+            <span class="project-stat-value roi">${project.roi || 0}%</span>
+          </div>
+          <div class="project-stat">
+            <span class="project-stat-label">Hourly</span>
+            <span class="project-stat-value">$${project.hourlyRate || 0}/hr</span>
+          </div>
+        </div>
+        <span class="difficulty-badge ${project.difficulty.toLowerCase()}">
+          <i class="fas fa-signal"></i> ${project.difficulty}
+        </span>
+      </div>
+      <div class="project-footer">
+        <button class="btn-project btn-view" onclick="viewProject('${project.id}')">
+          <i class="fas fa-eye"></i> View
+        </button>
+        <button class="btn-project btn-compare" onclick="addToCompare('${project.id}')">
+          <i class="fas fa-balance-scale"></i> Compare
+        </button>
+      </div>
+    </article>
+  `).join('');
+}
+
+function renderTrending() {
+  if (!state.trendsData) {
+    elements.trendingGrid.innerHTML = `
+      <div class="empty-state" style="grid-column: 1 / -1;">
+        <i class="fas fa-chart-line"></i>
+        <p>Enter your location to see trending data</p>
+      </div>
+    `;
+    return;
+  }
+  
+  const trends = Object.entries(state.trendsData)
+    .sort((a, b) => b[1].score - a[1].score)
+    .slice(0, 6);
+  
+  elements.trendingGrid.innerHTML = trends.map(([category, data]) => {
+    const trendClass = data.trend > 10 ? 'up' : data.trend < -10 ? 'down' : 'stable';
+    const trendIcon = data.trend > 10 ? 'arrow-up' : data.trend < -10 ? 'arrow-down' : 'minus';
+    
+    return `
+      <div class="trend-card ${trendClass}">
+        <div class="trend-header">
+          <span class="trend-category">${category}</span>
+          <span class="trend-indicator ${trendClass}">
+            <i class="fas fa-${trendIcon}"></i> ${Math.abs(data.trend)}%
+          </span>
+        </div>
+        <div class="trend-volume">Search Volume: ${data.volume || 'N/A'}</div>
+        <div class="trend-sparkline" data-sparkline="${category}"></div>
+      </div>
+    `;
+  }).join('');
+}
+
+function renderTopPicks() {
+  // Sort by ROI * Demand Score
+  const topPicks = [...state.projects]
+    .map(p => ({
+      ...p,
+      score: (p.roi || 0) * (calculateDemandScore(p) / 100)
+    }))
+    .sort((a, b) => b.score - a.score)
+    .slice(0, 6);
+  
+  elements.topPicksGrid.innerHTML = topPicks.map(project => `
+    <article class="project-card" data-category="${project.category}">
+      <div class="project-header">
+        <span class="project-category">${project.category}</span>
+        <h3 class="project-title">${project.title}</h3>
+        <span class="project-source"><i class="fas fa-building"></i> ${project.source}</span>
+      </div>
+      <div class="project-body">
+        <div class="project-stats">
+          <div class="project-stat">
+            <span class="project-stat-label">Profit</span>
+            <span class="project-stat-value profit">$${project.profit || 0}</span>
+          </div>
+          <div class="project-stat">
+            <span class="project-stat-label">ROI</span>
+            <span class="project-stat-value roi">${project.roi || 0}%</span>
+          </div>
+        </div>
+        <span class="difficulty-badge ${project.difficulty.toLowerCase()}">
+          <i class="fas fa-signal"></i> ${project.difficulty}
+        </span>
+      </div>
+      <div class="project-footer">
+        <button class="btn-project btn-view" onclick="viewProject('${project.id}')">
+          <i class="fas fa-eye"></i> View
+        </button>
+      </div>
+    </article>
+  `).join('');
+}
+
+function renderHeatmap() {
+  const categoryStats = {};
+  
+  state.projects.forEach(project => {
+    if (!categoryStats[project.category]) {
+      categoryStats[project.category] = {
+        count: 0,
+        avgProfit: 0,
+        totalProfit: 0,
+        demand: calculateDemandScore(project)
+      };
+    }
+    categoryStats[project.category].count++;
+    categoryStats[project.category].totalProfit += project.profit || 0;
+  });
+  
+  // Calculate average profit and determine heat level
+  Object.keys(categoryStats).forEach(cat => {
+    const stats = categoryStats[cat];
+    stats.avgProfit = stats.totalProfit / stats.count;
+    
+    if (stats.demand > 75) stats.heat = 'hot';
+    else if (stats.demand > 50) stats.heat = 'high';
+    else if (stats.demand > 25) stats.heat = 'medium';
+    else stats.heat = 'low';
+  });
+  
+  elements.heatmapGrid.innerHTML = Object.entries(categoryStats).map(([category, stats]) => `
+    <div class="heatmap-card ${stats.heat}" onclick="filterByCategory('${category}')">
+      <div class="heatmap-category">${category}</div>
+      <div class="heatmap-count">${stats.count} projects</div>
+      <div class="heatmap-demand">Avg Profit: $${Math.round(stats.avgProfit)}</div>
+    </div>
+  `).join('');
+}
+
+function renderSeasonal() {
+  const months = [
+    { name: 'Jan', peak: ['Indoor Furniture'] },
+    { name: 'Feb', peak: ['Indoor Furniture'] },
+    { name: 'Mar', peak: ['Planter Boxes', 'Raised Beds'] },
+    { name: 'Apr', peak: ['Planter Boxes', 'Raised Beds', 'Garden Projects'] },
+    { name: 'May', peak: ['Planter Boxes', 'Garden Projects', 'Outdoor Furniture'] },
+    { name: 'Jun', peak: ['Outdoor Furniture', 'Planter Boxes'] },
+    { name: 'Jul', peak: ['Outdoor Furniture', 'Tables'] },
+    { name: 'Aug', peak: ['Outdoor Furniture', 'Storage'] },
+    { name: 'Sep', peak: ['Indoor Furniture', 'Shelves'] },
+    { name: 'Oct', peak: ['Indoor Furniture', 'Tables'] },
+    { name: 'Nov', peak: ['Indoor Furniture', 'Storage'] },
+    { name: 'Dec', peak: ['Indoor Furniture', 'Storage'] }
+  ];
+  
+  elements.seasonalContent.innerHTML = months.map((month, index) => {
+    const isPeak = [2, 3, 4, 5, 6].includes(index); // Mar-Jul peak
+    return `
+      <div class="month-card ${isPeak ? 'peak' : ''}">
+        <div class="month-name">${month.name}</div>
+        <div class="month-category">${month.peak[0]}</div>
+      </div>
+    `;
+  }).join('');
+}
+
+function renderMaterials() {
+  const materials = [
+    { name: '2x4 Lumber (8ft)', price: 4.50, unit: 'each' },
+    { name: '2x6 Lumber (8ft)', price: 6.75, unit: 'each' },
+    { name: '1x6 Cedar (8ft)', price: 12.00, unit: 'each' },
+    { name: 'Plywood (4x8)', price: 45.00, unit: 'sheet' },
+    { name: 'Wood Screws (1lb)', price: 8.50, unit: 'box' },
+    { name: 'Wood Glue', price: 6.00, unit: 'bottle' },
+    { name: 'Sandpaper ( assorted)', price: 12.00, unit: 'pack' },
+    { name: 'Wood Stain', price: 15.00, unit: 'quart' },
+    { name: 'Polyurethane', price: 18.00, unit: 'quart' },
+    { name: 'Kreg Pocket Hole Screws', price: 12.00, unit: 'box' }
+  ];
+  
+  elements.materialsContent.innerHTML = `
+    <table class="materials-table">
+      <thead>
+        <tr>
+          <th>Material</th>
+          <th>Unit</th>
+          <th>Price</th>
+        </tr>
+      </thead>
+      <tbody>
+        ${materials.map(m => `
+          <tr>
+            <td><i class="fas fa-cube" style="color: var(--wood-medium); margin-right: 8px;"></i> ${m.name}</td>
+            <td>${m.unit}</td>
+            <td class="material-price">$${m.price.toFixed(2)}</td>
+          </tr>
+        `).join('')}
+      </tbody>
+    </table>
+  `;
+}
+
+// ========================================
+// API CALLS
+// ========================================
+async function fetchTrendsData(postalCode = 'H3A0G4', radius = 25) {
+  try {
+    const response = await fetch(`/api/trends?postalCode=${postalCode}&radius=${radius}`);
+    if (response.ok) {
+      state.trendsData = await response.json();
+      renderTrending();
+      renderHeatmap();
+    }
+  } catch (error) {
+    console.error('Failed to fetch trends:', error);
+    // Use fallback data
+    generateFallbackTrends();
+  }
+}
+
+async function fetchSeasonalData() {
+  try {
+    const response = await fetch('/api/seasonal');
+    if (response.ok) {
+      state.seasonalData = await response.json();
+    }
+  } catch (error) {
+    console.error('Failed to fetch seasonal data:', error);
+  }
+}
+
+async function fetchMaterialCosts() {
+  try {
+    const postalCode = elements.postalCode.value.trim() || 'H3A0G4';
+    const response = await fetch(`/api/material-costs?postalCode=${postalCode}`);
+    if (response.ok) {
+      state.materialCosts = await response.json();
+    }
+  } catch (error) {
+    console.error('Failed to fetch material costs:', error);
+  }
+}
+
+function generateFallbackTrends() {
+  const categories = [...new Set(state.projects.map(p => p.category))];
+  state.trendsData = {};
+  
+  categories.forEach(cat => {
+    state.trendsData[cat] = {
+      score: Math.floor(Math.random() * 60) + 40,
+      trend: Math.floor(Math.random() * 40) - 20,
+      volume: `${Math.floor(Math.random() * 50) + 10}K`
+    };
+  });
+}
+
+// ========================================
+// STATS & CALCULATIONS
+// ========================================
+function updateStats() {
+  const projects = state.filteredProjects;
+  const totalProfit = projects.reduce((sum, p) => sum + (p.profit || 0), 0);
+  const totalHours = projects.reduce((sum, p) => sum + (p.estimatedHours || 0), 0);
+  const avgRoi = projects.length > 0 
+    ? Math.round(projects.reduce((sum, p) => sum + (p.roi || 0), 0) / projects.length)
+    : 0;
+  
+  animateValue(elements.totalProjects, 0, projects.length, 1000);
+  animateValue(elements.totalProfit, 0, totalProfit, 1000, '$');
+  animateValue(elements.totalHours, 0, totalHours, 1000);
+  animateValue(elements.avgRoi, 0, avgRoi, 1000, '', '%');
+  
+  elements.resultsCount.textContent = projects.length;
+}
+
+function animateStats() {
+  const cards = document.querySelectorAll('.stat-card');
+  cards.forEach((card, index) => {
+    card.style.animationDelay = `${index * 100}ms`;
+    card.classList.add('animate-fadeInUp');
+  });
+}
+
+function animateValue(element, start, end, duration, prefix = '', suffix = '') {
+  const startTime = performance.now();
+  
+  function update(currentTime) {
+    const elapsed = currentTime - startTime;
+    const progress = Math.min(elapsed / duration, 1);
+    const easeProgress = 1 - Math.pow(1 - progress, 3); // easeOutCubic
+    
+    const current = Math.round(start + (end - start) * easeProgress);
+    element.textContent = `${prefix}${current.toLocaleString()}${suffix}`;
+    
+    if (progress < 1) {
+      requestAnimationFrame(update);
+    }
+  }
+  
+  requestAnimationFrame(update);
+}
+
+function calculateTimeToProfit() {
+  const hoursPerWeek = parseInt(document.getElementById('calc-hours-week').value) || 10;
+  const budget = parseInt(document.getElementById('calc-budget').value) || 500;
+  
+  // Find projects that fit the budget
+  const affordable = state.projects.filter(p => p.materialCost <= budget);
+  const bestProject = affordable.sort((a, b) => (b.profit || 0) - (a.profit || 0))[0];
+  
+  if (!bestProject) {
+    document.getElementById('calc-results').innerHTML = `
+      <div class="result-item">
+        <span class="result-label">No projects found within budget</span>
+      </div>
+    `;
+    return;
+  }
+  
+  const weeksToComplete = Math.ceil((bestProject.estimatedHours || 1) / hoursPerWeek);
+  const profitPerHour = bestProject.hourlyRate || 0;
+  const monthlyIncome = profitPerHour * hoursPerWeek * 4;
+  
+  document.getElementById('calc-results').innerHTML = `
+    <div class="result-item">
+      <span class="result-label">Recommended First Project</span>
+      <span class="result-value">${bestProject.title}</span>
+    </div>
+    <div class="result-item">
+      <span class="result-label">Time to Complete</span>
+      <span class="result-value">${weeksToComplete} week${weeksToComplete !== 1 ? 's' : ''}</span>
+    </div>
+    <div class="result-item">
+      <span class="result-label">Profit Potential</span>
+      <span class="result-value">$${bestProject.profit || 0}</span>
+    </div>
+    <div class="result-item">
+      <span class="result-label">Projected Monthly Income</span>
+      <span class="result-value">$${monthlyIncome.toLocaleString()}</span>
+    </div>
+  `;
+}
+
+// ========================================
+// PROJECT ACTIONS
+// ========================================
+function viewProject(projectId) {
+  const project = state.projects.find(p => p.id === projectId);
+  if (!project) return;
+  
+  elements.modalTitle.textContent = project.title;
+  elements.detailContent.innerHTML = `
+    <div class="detail-section">
+      <h4><i class="fas fa-info-circle"></i> Project Details</h4>
+      <div class="detail-grid">
+        <div class="detail-item">
+          <span class="detail-label">Category</span>
+          <span class="detail-value">${project.category}</span>
+        </div>
+        <div class="detail-item">
+          <span class="detail-label">Difficulty</span>
+          <span class="detail-value">${project.difficulty}</span>
+        </div>
+        <div class="detail-item">
+          <span class="detail-label">Source</span>
+          <span class="detail-value">${project.source}</span>
+        </div>
+        <div class="detail-item">
+          <span class="detail-label">Pages</span>
+          <span class="detail-value">${project.pageCount || 'N/A'}</span>
+        </div>
+      </div>
+    </div>
+    
+    <div class="detail-section">
+      <h4><i class="fas fa-dollar-sign"></i> Financial Breakdown</h4>
+      <div class="detail-grid">
+        <div class="detail-item">
+          <span class="detail-label">Material Cost</span>
+          <span class="detail-value">$${project.materialCost || 0}</span>
+        </div>
+        <div class="detail-item">
+          <span class="detail-label">Selling Price</span>
+          <span class="detail-value">$${project.sellingPrice || 0}</span>
+        </div>
+        <div class="detail-item">
+          <span class="detail-label">Profit</span>
+          <span class="detail-value" style="color: var(--forest-green);">$${project.profit || 0}</span>
+        </div>
+        <div class="detail-item">
+          <span class="detail-label">ROI</span>
+          <span class="detail-value">${project.roi || 0}%</span>
+        </div>
+      </div>
+    </div>
+    
+    <div class="detail-section">
+      <h4><i class="fas fa-clock"></i> Time & Effort</h4>
+      <div class="detail-grid">
+        <div class="detail-item">
+          <span class="detail-label">Estimated Hours</span>
+          <span class="detail-value">${project.estimatedHours || 0} hours</span>
+        </div>
+        <div class="detail-item">
+          <span class="detail-label">Estimated Days</span>
+          <span class="detail-value">${project.estimatedDays || Math.ceil((project.estimatedHours || 0) / 8)} days</span>
+        </div>
+        <div class="detail-item">
+          <span class="detail-label">Hourly Rate</span>
+          <span class="detail-value">$${project.hourlyRate || 0}/hour</span>
+        </div>
+      </div>
+    </div>
+    
+    ${project.tools ? `
+    <div class="detail-section">
+      <h4><i class="fas fa-tools"></i> Tools Required</h4>
+      <div class="detail-grid">
+        ${project.tools.map(tool => `
+          <div class="detail-item">
+            <span class="detail-value"><i class="fas fa-check" style="color: var(--forest-green);"></i> ${tool}</span>
+          </div>
+        `).join('')}
+      </div>
+    </div>
+    ` : ''}
+    
+    <div class="detail-section" style="display: flex; gap: 16px;">
+      <button class="btn-primary" onclick="openPdf('${project.id}')" style="flex: 1;">
+        <i class="fas fa-file-pdf"></i> View PDF Plans
+      </button>
+      <button class="btn-secondary" onclick="addToCompare('${project.id}')" style="flex: 1;">
+        <i class="fas fa-balance-scale"></i> Add to Compare
+      </button>
+    </div>
+  `;
+  
+  openModal('detail-modal');
+}
+
+function openPdf(projectId) {
+  const project = state.projects.find(p => p.id === projectId);
+  if (!project || !project.relativePath) return;
+  
+  // Construct path relative to the project root
+  const pdfPath = `../${project.relativePath}`;
+  elements.pdfViewer.src = pdfPath;
+  elements.modalTitle.textContent = project.title;
+  
+  closeModal('detail-modal');
+  openModal('pdf-modal');
+}
+
+function addToCompare(projectId) {
+  const project = state.projects.find(p => p.id === projectId);
+  if (!project) return;
+  
+  // Remove if already in list
+  const index = state.compareList.findIndex(p => p.id === projectId);
+  if (index > -1) {
+    state.compareList.splice(index, 1);
+  } else if (state.compareList.length < 3) {
+    state.compareList.push(project);
+  } else {
+    showError('You can compare up to 3 projects at a time');
+    return;
+  }
+  
+  if (state.compareList.length > 1) {
+    renderCompare();
+    openModal('compare-modal');
+  } else {
+    showError('Add at least 2 projects to compare');
+  }
+}
+
+function renderCompare() {
+  const projects = state.compareList;
+  
+  // Comparison table
+  const rows = [
+    { label: 'Category', key: 'category' },
+    { label: 'Difficulty', key: 'difficulty' },
+    { label: 'Material Cost', key: 'materialCost', format: v => `$${v || 0}` },
+    { label: 'Selling Price', key: 'sellingPrice', format: v => `$${v || 0}` },
+    { label: 'Profit', key: 'profit', format: v => `$${v || 0}` },
+    { label: 'ROI', key: 'roi', format: v => `${v || 0}%` },
+    { label: 'Time Required', key: 'estimatedHours', format: v => `${v || 0} hrs` },
+    { label: 'Hourly Rate', key: 'hourlyRate', format: v => `$${v || 0}/hr` }
+  ];
+  
+  const tableHtml = `
+    <table class="compare-table">
+      <thead>
+        <tr>
+          <th>Feature</th>
+          ${projects.map(p => `<th>${p.title}</th>`).join('')}
+        </tr>
+      </thead>
+      <tbody>
+        ${rows.map(row => `
+          <tr>
+            <td><strong>${row.label}</strong></td>
+            ${projects.map(p => `<td>${row.format ? row.format(p[row.key]) : p[row.key]}</td>`).join('')}
+          </tr>
+        `).join('')}
+      </tbody>
+    </table>
+  `;
+  
+  elements.compareContent.querySelector('.compare-table-wrapper').innerHTML = tableHtml;
+  
+  // Simple bar charts using CSS
+  const maxProfit = Math.max(...projects.map(p => p.profit || 0));
+  
+  document.getElementById('compare-chart-profit').querySelector('.chart-area').innerHTML = `
+    <div style="display: flex; align-items: flex-end; gap: 20px; height: 100%; padding: 20px; justify-content: center;">
+      ${projects.map(p => `
+        <div style="text-align: center;">
+          <div style="width: 60px; background: linear-gradient(to top, var(--wood-medium), var(--wood-light)); 
+                      height: ${((p.profit || 0) / maxProfit * 150)}px; border-radius: 4px 4px 0 0;">
+          </div>
+          <div style="margin-top: 8px; font-size: 0.75rem; max-width: 80px; overflow: hidden; text-overflow: ellipsis;">
+            ${p.title.substring(0, 15)}${p.title.length > 15 ? '...' : ''}
+          </div>
+        </div>
+      `).join('')}
+    </div>
+  `;
+  
+  // Clear other charts (would need charting library for full implementation)
+  document.getElementById('compare-chart-time').querySelector('.chart-area').innerHTML = 
+    '<div style="padding: 20px; color: var(--warm-gray);"><i class="fas fa-info-circle"></i> Time comparison chart would render here</div>';
+  document.getElementById('compare-chart-materials').querySelector('.chart-area').innerHTML = 
+    '<div style="padding: 20px; color: var(--warm-gray);"><i class="fas fa-info-circle"></i> Material cost breakdown would render here</div>';
+}
+
+function filterByCategory(category) {
+  // Reset all category checkboxes
+  elements.categoryFilters.querySelectorAll('input').forEach(cb => {
+    cb.checked = cb.value === category;
+  });
+  
+  state.filters.categories = [category];
+  applyFilters();
+  
+  // Scroll to projects
+  document.getElementById('sort-controls').scrollIntoView({ behavior: 'smooth' });
+}
+
+// ========================================
+// EXPORT FUNCTIONS
+// ========================================
+function exportCSV() {
+  const headers = ['Title', 'Category', 'Difficulty', 'Profit', 'ROI', 'Hours', 'Source'];
+  const rows = state.filteredProjects.map(p => [
+    `"${p.title}"`,
+    p.category,
+    p.difficulty,
+    p.profit || 0,
+    p.roi || 0,
+    p.estimatedHours || 0,
+    p.source
+  ]);
+  
+  const csv = [headers.join(','), ...rows.map(r => r.join(','))].join('\n');
+  downloadFile(csv, 'woodworking-projects.csv', 'text/csv');
+  closeModal('export-modal');
+}
+
+function exportJSON() {
+  const data = JSON.stringify(state.filteredProjects, null, 2);
+  downloadFile(data, 'woodworking-projects.json', 'application/json');
+  closeModal('export-modal');
+}
+
+function exportPrint() {
+  const printWindow = window.open('', '_blank');
+  const projectsHtml = state.filteredProjects.map(p => `
+    <div style="margin-bottom: 20px; padding: 20px; border: 1px solid #ddd; break-inside: avoid;">
+      <h3>${p.title}</h3>
+      <p><strong>Category:</strong> ${p.category} | <strong>Difficulty:</strong> ${p.difficulty}</p>
+      <p><strong>Profit:</strong> $${p.profit || 0} | <strong>ROI:</strong> ${p.roi || 0}% | <strong>Time:</strong> ${p.estimatedHours || 0} hrs</p>
+    </div>
+  `).join('');
+  
+  printWindow.document.write(`
+    <html>
+      <head>
+        <title>Woodworking Projects - Print View</title>
+        <style>
+          body { font-family: Arial, sans-serif; padding: 20px; }
+          h1 { color: #5D3A1A; }
+        </style>
+      </head>
+      <body>
+        <h1>Woodworking Pro - Project List</h1>
+        <p>Generated on ${new Date().toLocaleDateString()}</p>
+        <hr>
+        ${projectsHtml}
+      </body>
+    </html>
+  `);
+  
+  printWindow.document.close();
+  printWindow.print();
+  closeModal('export-modal');
+}
+
+function copyShareableLink() {
+  const params = new URLSearchParams();
+  if (state.filters.search) params.set('search', state.filters.search);
+  if (state.filters.categories.length > 0) params.set('categories', state.filters.categories.join(','));
+  if (state.sort !== 'profit-desc') params.set('sort', state.sort);
+  
+  const url = `${window.location.origin}${window.location.pathname}?${params.toString()}`;
+  
+  navigator.clipboard.writeText(url).then(() => {
+    showSuccess('Link copied to clipboard!');
+    closeModal('export-modal');
+  }).catch(() => {
+    showError('Failed to copy link');
+  });
+}
+
+function downloadFile(content, filename, type) {
+  const blob = new Blob([content], { type });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = filename;
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+}
+
+// ========================================
+// UI UTILITIES
+// ========================================
+function toggleSidebar() {
+  elements.sidebar.classList.toggle('open');
+}
+
+function closeSidebar() {
+  elements.sidebar.classList.remove('open');
+}
+
+function toggleDarkMode() {
+  const html = document.documentElement;
+  const currentTheme = html.getAttribute('data-theme');
+  const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+  
+  html.setAttribute('data-theme', newTheme);
+  localStorage.setItem('theme', newTheme);
+  
+  // Update icon
+  elements.darkModeIcon.className = newTheme === 'dark' ? 'fas fa-sun' : 'fas fa-moon';
+}
+
+function openModal(modalId) {
+  document.getElementById(modalId).classList.add('active');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeModal(modalId) {
+  document.getElementById(modalId).classList.remove('active');
+  document.body.style.overflow = '';
+}
+
+function loadSavedPreferences() {
+  // Theme
+  const savedTheme = localStorage.getItem('theme');
+  if (savedTheme) {
+    document.documentElement.setAttribute('data-theme', savedTheme);
+    elements.darkModeIcon.className = savedTheme === 'dark' ? 'fas fa-sun' : 'fas fa-moon';
+  }
+  
+  // Check for URL params
+  const params = new URLSearchParams(window.location.search);
+  if (params.has('search')) {
+    elements.searchInput.value = params.get('search');
+    state.filters.search = params.get('search');
+  }
+  if (params.has('sort')) {
+    state.sort = params.get('sort');
+    elements.sortSelect.value = state.sort;
+  }
+}
+
+function debounce(func, wait) {
+  let timeout;
+  return function executedFunction(...args) {
+    const later = () => {
+      clearTimeout(timeout);
+      func(...args);
+    };
+    clearTimeout(timeout);
+    timeout = setTimeout(later, wait);
+  };
+}
+
+function showError(message) {
+  // Simple toast notification
+  const toast = document.createElement('div');
+  toast.style.cssText = `
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background: var(--danger);
+    color: white;
+    padding: 16px 24px;
+    border-radius: 8px;
+    box-shadow: var(--shadow-lg);
+    z-index: 3000;
+    font-weight: 500;
+  `;
+  toast.innerHTML = `<i class="fas fa-exclamation-circle"></i> ${message}`;
+  document.body.appendChild(toast);
+  
+  setTimeout(() => {
+    toast.remove();
+  }, 3000);
+}
+
+function showSuccess(message) {
+  const toast = document.createElement('div');
+  toast.style.cssText = `
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background: var(--success);
+    color: white;
+    padding: 16px 24px;
+    border-radius: 8px;
+    box-shadow: var(--shadow-lg);
+    z-index: 3000;
+    font-weight: 500;
+  `;
+  toast.innerHTML = `<i class="fas fa-check-circle"></i> ${message}`;
+  document.body.appendChild(toast);
+  
+  setTimeout(() => {
+    toast.remove();
+  }, 3000);
+}
