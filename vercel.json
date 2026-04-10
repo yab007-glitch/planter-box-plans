@@ -1,5 +1,16 @@
 {
   "version": 2,
+  "outputDirectory": "web-catalog",
+  "builds": [
+    {
+      "src": "api/**/*.js",
+      "use": "@vercel/node"
+    },
+    {
+      "src": "web-catalog/**/*",
+      "use": "@vercel/static"
+    }
+  ],
   "routes": [
     {
       "src": "/api/(.*)",
@@ -8,10 +19,6 @@
     {
       "src": "/plans/(.*)",
       "dest": "/api/pdf.js?path=$1"
-    },
-    {
-      "src": "/web-catalog/(.*)",
-      "dest": "/web-catalog/$1"
     },
     {
       "src": "/(.*)",
